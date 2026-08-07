@@ -1,0 +1,256 @@
+/* ============================================================
+   MANTOUVERT — DESIGN SYSTEM BASE
+   Source of truth: rools.md (Version 1.0)
+   ============================================================ */
+
+/* --------------------------------------------
+   Global Fonts — @font-face declarations
+   -------------------------------------------- */
+@font-face {
+  font-family: 'Monic DEMO';
+  src: url('../public/fonts/Monic DEMO.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ethereal Demo';
+  src: url('../public/fonts/EtherealDemo-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ethereal Demo';
+  src: url('../public/fonts/EtherealDemo-ExtraLight.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ethereal Demo';
+  src: url('../public/fonts/EtherealDemo-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ethereal Demo';
+  src: url('../public/fonts/EtherealDemo-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ethereal Demo';
+  src: url('../public/fonts/EtherealDemo-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ethereal Demo';
+  src: url('../public/fonts/EtherealDemo-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ethereal Demo';
+  src: url('../public/fonts/EtherealDemo-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ethereal Demo';
+  src: url('../public/fonts/EtherealDemo-ExtraBold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ethereal Demo';
+  src: url('../public/fonts/EtherealDemo-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --------------------------------------------
+   Design Tokens
+   -------------------------------------------- */
+:root {
+  /* Color Palette */
+  --color-orange: #C95F24;        /* Burnt Orange — Primary */
+  --color-orange-accent: #E57A32; /* Accent Orange */
+  --color-brick: #8F3526;         /* Deep Brick Red */
+  --color-black: #111111;         /* Matte Black */
+  --color-charcoal: #232323;      /* Charcoal */
+  --color-white: #F5F2ED;         /* Warm White */
+  --color-sand: #DED6C8;          /* Sand */
+  --color-stone: #BFB4A6;         /* Stone */
+  --color-olive: #6F7352;         /* Olive Accent — landscaping pages only */
+
+  /* Color Usage Ratio: 60% white / 25% black / 10% orange / 5% accents */
+  --color-bg: var(--color-white);
+  --color-bg-dark: var(--color-black);
+  --color-text: var(--color-black);
+  --color-text-inverse: var(--color-white);
+  --color-muted: var(--color-stone);
+  --color-accent: var(--color-orange);
+
+  /* Typography */
+  --font-display: 'Monic DEMO', 'Times New Roman', serif;      /* Hero Titles */
+  --font-secondary: 'Ethereal Demo', Georgia, serif;           /* Section Titles */
+  --font-body: 'Inter', 'General Sans', -apple-system, sans-serif;
+
+  /* Typography Scale */
+  --type-hero: clamp(80px, 12vw, 180px);    /* Hero 120–180px */
+  --type-section: clamp(48px, 7vw, 90px);   /* Section Title 60–90px */
+  --type-heading: clamp(36px, 4.5vw, 56px); /* Large Heading 42–56px */
+  --type-body: 18px;                        /* Body 18–20px */
+  --type-small: 14px;                       /* Small Text */
+
+  /* Layout */
+  --container-max: 1600px;  /* Max Width */
+  --content-max: 1400px;    /* Content Width */
+  --gutter: 40px;           /* Large Gutters */
+  --section-pad-desktop: 180px; /* Section Padding Desktop */
+  --section-pad-mobile: 90px;   /* Section Padding Mobile */
+
+  /* Shape & Elevation */
+  --radius-none: 0px;   /* Images, Cards */
+  --radius-btn: 4px;    /* Buttons */
+  --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.05);
+
+  /* Motion */
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --duration-fast: 250ms;  /* Button hover */
+  --duration-base: 400ms;  /* Allowed: 400–700ms */
+  --duration-slow: 700ms;
+}
+
+/* --------------------------------------------
+   Reset
+   -------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+blockquote {
+  margin: 0;
+}
+
+/* --------------------------------------------
+   Base Typography
+   -------------------------------------------- */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-secondary);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: var(--type-hero);
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: var(--type-section);
+}
+
+h3 {
+  font-size: var(--type-heading);
+}
+
+p {
+  font-size: var(--type-body);
+  max-width: 65ch;
+}
+
+small,
+.meta {
+  font-size: var(--type-small);
+  color: var(--color-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-white);
+}
+
+/* --------------------------------------------
+   Texture — subtle stone/paper/concrete,
+   very low opacity, never noisy
+   -------------------------------------------- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url('../assets/textures/paper.jpg');
+  background-repeat: repeat;
+}

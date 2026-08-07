@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Mantouvert</title>
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <header class="site-header" data-header>
+    <nav class="nav container">
+      <button class="nav__toggle" aria-label="Open menu" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <a href="index.html" class="nav__logo">Mantouvert</a>
+    </nav>
+    <div class="nav__menu">
+      <ul class="nav__links">
+        <li><a href="index.html" class="nav__link">Home</a></li>
+        <li><a href="projects.html" class="nav__link">Projects</a></li>
+        <li><a href="services.html" class="nav__link">Services</a></li>
+        <li><a href="about.html" class="nav__link">About</a></li>
+        <li><a href="contact.html" class="nav__link nav__link--cta is-active">Request a Quote</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero hero--page">
+      <div class="hero__media">
+        <img src="assets/images/placeholder-hero.jpg" alt="">
+      </div>
+      <div class="hero__content container">
+        <h1 class="hero__title">
+          LET'S<br>
+          TALK
+        </h1>
+        <div class="hero__actions">
+          <a href="mailto:hello@mantouvert.com" class="btn btn--primary">EMAIL US</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDITORIAL INTRO -->
+    <section class="intro">
+      <div class="container">
+        <p class="intro__eyebrow">— 01 — Contact</p>
+        <h2 class="intro__title">
+          Tell us about your project. We'll respond within 24 hours.
+        </h2>
+      </div>
+    </section>
+
+    <!-- CONTACT FORM + DETAILS -->
+    <section class="contact">
+      <div class="container">
+        <div class="craftsmanship__grid">
+
+          <!-- Contact form -->
+          <div class="craftsmanship__content">
+            <form class="contact-form" action="#" method="post">
+              <div class="contact-form__field">
+                <label class="meta" for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+              </div>
+              <div class="contact-form__field">
+                <label class="meta" for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+              <div class="contact-form__field">
+                <label class="meta" for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone">
+              </div>
+              <div class="contact-form__field">
+                <label class="meta" for="service">Service</label>
+                <select id="service" name="service">
+                  <option>Pool Construction</option>
+                  <option>Garden Design</option>
+                  <option>Waterfalls & Cascades</option>
+                  <option>Villas & Renovations</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="contact-form__field">
+                <label class="meta" for="message">Project Details</label>
+                <textarea id="message" name="message" rows="6" required></textarea>
+              </div>
+              <button type="submit" class="btn btn--primary">SEND REQUEST</button>
+            </form>
+          </div>
+
+          <!-- Contact details -->
+          <div class="craftsmanship__media">
+            <div class="contact-details">
+              <h3 class="craftsmanship__title">Contact</h3>
+              <ul class="project-detail__facts">
+                <li><span class="meta">Email</span> hello@mantouvert.com</li>
+                <li><span class="meta">Phone</span> +212 000 000 000</li>
+                <li><span class="meta">Studio</span> Casablanca, Morocco</li>
+                <li><span class="meta">Hours</span> Mon – Sat · 9:00 – 18:00</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT CTA -->
+    <section class="cta">
+      <div class="container">
+        <h2 class="cta__title">
+          BUILD<br>
+          WITH US
+        </h2>
+        <a href="mailto:hello@mantouvert.com" class="btn btn--light">EMAIL US</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <a href="index.html" class="site-footer__logo">Mantouvert</a>
+      <nav class="site-footer__nav">
+        <ul>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="site-footer__meta">
+        <p>© 2025 Mantouvert. All rights reserved.</p>
+        <p>Pool Construction · Garden Design · Landscaping · Villas</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

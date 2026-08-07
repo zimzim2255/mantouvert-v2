@@ -1,0 +1,281 @@
+/* ============================================================
+   MANTOUVERT — LAYOUT & GRID
+   Source of truth: rools.md (Version 1.0)
+   ============================================================ */
+
+/* --------------------------------------------
+   Containers
+   -------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max); /* 1600px */
+  margin-inline: auto;
+  padding-inline: var(--gutter);   /* 40px gutters */
+}
+
+.container--content {
+  max-width: var(--content-max);   /* 1400px content width */
+}
+
+/* --------------------------------------------
+   Section Spacing
+   Magazine-like luxury breathing room.
+   -------------------------------------------- */
+.section,
+section {
+  padding-block: var(--section-pad-desktop); /* 180px top + bottom */
+}
+
+/* --------------------------------------------
+   12-Column Grid
+   -------------------------------------------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gutter);
+}
+
+/* Column spans */
+.col-1  { grid-column: span 1; }
+.col-2  { grid-column: span 2; }
+.col-3  { grid-column: span 3; }
+.col-4  { grid-column: span 4; }
+.col-5  { grid-column: span 5; }
+.col-6  { grid-column: span 6; }
+.col-7  { grid-column: span 7; }
+.col-8  { grid-column: span 8; }
+.col-9  { grid-column: span 9; }
+.col-10 { grid-column: span 10; }
+.col-11 { grid-column: span 11; }
+.col-12 { grid-column: span 12; }
+
+/* Common section grid patterns */
+.grid--split {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gutter);
+  align-items: center;
+}
+
+.grid--split > .media {
+  grid-column: span 7;
+}
+
+.grid--split > .content {
+  grid-column: span 5;
+}
+
+.grid--split > .media--right {
+  grid-column: span 7;
+  order: 2;
+}
+
+.grid--split > .content--left {
+  grid-column: span 5;
+  order: 1;
+}
+
+/* --------------------------------------------
+   Editorial Section Head
+   -------------------------------------------- */
+.section-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: var(--gutter);
+  margin-bottom: 80px;
+}
+
+.section-head__eyebrow {
+  grid-column: 1 / -1;
+  font-family: var(--font-body);
+  font-size: var(--type-small);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.section-head__title {
+  font-family: var(--font-secondary);
+  font-size: var(--type-section);
+  line-height: 1.05;
+}
+
+.section-head__link {
+  font-size: var(--type-small);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 4px;
+  transition: color var(--duration-fast) var(--ease);
+}
+
+.section-head__link:hover {
+  color: var(--color-accent);
+}
+
+/* --------------------------------------------
+   Hero Layout
+   -------------------------------------------- */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 80px;
+  overflow: hidden;
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.hero__media img,
+.hero__media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__content {
+  width: 100%;
+}
+
+.hero__title {
+  margin-bottom: 32px;
+}
+
+.hero__intro {
+  font-size: var(--type-body);
+  color: var(--color-text-inverse);
+  margin-bottom: 48px;
+  opacity: 0.85;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------
+   Featured Projects Grid
+   -------------------------------------------- */
+.featured__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gutter);
+}
+
+/* --------------------------------------------
+   Services List
+   -------------------------------------------- */
+.services__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gutter);
+  margin-bottom: 80px;
+}
+
+/* --------------------------------------------
+   Craftsmanship Split
+   -------------------------------------------- */
+.craftsmanship__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gutter);
+  align-items: center;
+}
+
+.craftsmanship__media {
+  grid-column: span 7;
+}
+
+.craftsmanship__content {
+  grid-column: span 5;
+}
+
+/* --------------------------------------------
+   Stats
+   -------------------------------------------- */
+.stats__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gutter);
+}
+
+/* --------------------------------------------
+   Gallery
+   -------------------------------------------- */
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gutter);
+}
+
+/* --------------------------------------------
+   Footer
+   -------------------------------------------- */
+.site-footer .container {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--gutter);
+  align-items: start;
+}
+
+.site-footer__meta {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-top: 1px solid rgba(245, 242, 237, 0.15);
+  padding-top: 40px;
+  margin-top: 120px;
+}
+
+/* --------------------------------------------
+   Responsive — Mobile (section padding 90px)
+   -------------------------------------------- */
+@media (max-width: 1024px) {
+  .grid--split > .media,
+  .grid--split > .content,
+  .grid--split > .media--right,
+  .grid--split > .content--left,
+  .craftsmanship__media,
+  .craftsmanship__content {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 768px) {
+  .section,
+  section {
+    padding-block: var(--section-pad-mobile); /* 90px */
+  }
+
+  .featured__grid,
+  .services__list,
+  .gallery__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-head {
+    grid-template-columns: 1fr;
+    margin-bottom: 48px;
+  }
+
+  .section-head__link {
+    grid-column: 1;
+  }
+
+  .site-footer .container {
+    grid-template-columns: 1fr;
+  }
+}
