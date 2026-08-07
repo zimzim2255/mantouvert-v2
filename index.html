@@ -33,96 +33,100 @@
   </header>
 
   <main>
-
-    <!-- HERO — 4×2 grid (8 cards) over one continuous background -->
-    <section class="hero hero--grid">
-      <!-- Global background image (continuous across all cards) -->
-      <div class="hero__bg" aria-hidden="true">
-        <img src="public/imgs/hero_garden.jpg" alt="">
-        <img src="public/imgs/hero_swimmingpool.jpg" alt="">
-        <img src="public/imgs/hero_waterfall.jpg" alt="">
-      </div>
-
-      <!-- Card 1 (R1C1) — Blurred card -->
-      <div class="hero-card hero-card--blur">
-        <a href="#" class="hero-card__join">Join the Community ></a>
-      </div>
-
-      <!-- Card 2 (R1C2) — Transparent -->
-      <div class="hero-card"></div>
-
-      <!-- Card 3 (R1C3) — Transparent -->
-      <div class="hero-card"></div>
-
-      <!-- Card 4 (R1C4) — Transparent -->
-      <div class="hero-card"></div>
-
-      <!-- Card 5 (R2C1) — 01 For Everyday -->
-      <div class="hero-card hero-card--label">
-        <div class="hero-card__marker">
-          <span class="hero-card__number">01</span>
-          <span class="hero-card__triangle"></span>
-          <span class="hero-card__label">For Everyday</span>
+    <!-- HERO CARDS -->
+    <section class="hero hero--cards">
+      <div class="hero-cards">
+        <!-- Row 1 -->
+        <div class="hero-card">
+          <div class="hero-card__media">
+            <img src="public/imgs/hero_garden.jpg" alt="Garden Design">
+          </div>
+          <div class="hero-card__overlay"></div>
+          <div class="hero-card__content">
+            <span class="hero-card__number">01</span>
+            <h2 class="hero-card__title">Garden<br>Design</h2>
+          </div>
         </div>
-      </div>
 
-      <!-- Card 6 (R2C2) — 02 For Active -->
-      <div class="hero-card hero-card--label">
-        <div class="hero-card__marker">
-          <span class="hero-card__number">02</span>
-          <span class="hero-card__triangle"></span>
-          <span class="hero-card__label">For Active</span>
+        <div class="hero-card">
+          <div class="hero-card__media">
+            <img src="public/imgs/hero_swimmingpool.jpg" alt="Swimming Pools">
+          </div>
+          <div class="hero-card__overlay"></div>
+          <div class="hero-card__content">
+            <span class="hero-card__number">02</span>
+            <h2 class="hero-card__title">Swimming<br>Pools</h2>
+          </div>
         </div>
-      </div>
 
-      <!-- Card 7 (R2C3) — 03 For Date Night -->
-      <div class="hero-card hero-card--label">
-        <div class="hero-card__marker">
-          <span class="hero-card__number">03</span>
-          <span class="hero-card__triangle"></span>
-          <span class="hero-card__label">For Date Night</span>
+        <div class="hero-card">
+          <div class="hero-card__media">
+            <img src="public/imgs/hero_waterfall.jpg" alt="Water Features">
+          </div>
+          <div class="hero-card__overlay"></div>
+          <div class="hero-card__content">
+            <span class="hero-card__number">03</span>
+            <h2 class="hero-card__title">Water<br>Features</h2>
+          </div>
         </div>
-      </div>
 
-      <!-- Card 8 (R2C4) — No borders -->
-      <div class="hero-card"></div>
+        <div class="hero-card">
+          <div class="hero-card__media">
+            <img src="public/imgs/hero_garden.jpg" alt="Outdoor Living">
+          </div>
+          <div class="hero-card__overlay"></div>
+          <div class="hero-card__content">
+            <span class="hero-card__number">04</span>
+            <h2 class="hero-card__title">Outdoor<br>Living</h2>
+          </div>
+        </div>
 
-      <!-- Top navigation icons (absolute positioned) -->
-      <div class="hero__top-icons">
-        <span class="hero__icon hero__icon--menu">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-        </span>
-        <span class="hero__icon hero__icon--social">
-          <!-- Instagram camera icon -->
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-          </svg>
-        </span>
-        <span class="hero__icon hero__icon--social">
-          <!-- Chat bubble icon -->
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-          </svg>
-        </span>
-      </div>
+        <!-- Row 2 -->
+        <div class="hero-card">
+          <div class="hero-card__media">
+            <img src="public/imgs/hero_swimmingpool.jpg" alt="Landscaping">
+          </div>
+          <div class="hero-card__overlay"></div>
+          <div class="hero-card__content">
+            <span class="hero-card__number">05</span>
+            <h2 class="hero-card__title">Landscaping</h2>
+          </div>
+        </div>
 
-      <!-- Bottom overlay content (spans multiple cards) -->
-      <div class="hero__bottom">
-        <h1 class="hero__headline">
-          <span>Always</span>
-          <span>for the</span>
-          <span>smile</span>
-        </h1>
-        <p class="hero__paragraph">
-          Experience comfort with a conscience. Our eco-friendly underwear is designed
-          for ultimate softness and all-day wear, crafted from sustainable materials.
-        </p>
+        <div class="hero-card">
+          <div class="hero-card__media">
+            <img src="public/imgs/hero_waterfall.jpg" alt="Hardscaping">
+          </div>
+          <div class="hero-card__overlay"></div>
+          <div class="hero-card__content">
+            <span class="hero-card__number">06</span>
+            <h2 class="hero-card__title">Hardscaping</h2>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-card__media">
+            <img src="public/imgs/hero_garden.jpg" alt="Irrigation">
+          </div>
+          <div class="hero-card__overlay"></div>
+          <div class="hero-card__content">
+            <span class="hero-card__number">07</span>
+            <h2 class="hero-card__title">Irrigation</h2>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-card__media">
+            <img src="public/imgs/hero_swimmingpool.jpg" alt="Maintenance">
+          </div>
+          <div class="hero-card__overlay"></div>
+          <div class="hero-card__content">
+            <span class="hero-card__number">08</span>
+            <h2 class="hero-card__title">Maintenance</h2>
+          </div>
+        </div>
       </div>
     </section>
-
   </main>
 
   <script src="js/main.js"></script>

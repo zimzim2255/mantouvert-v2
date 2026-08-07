@@ -443,241 +443,94 @@
 }
 
 /* --------------------------------------------
-   Hero — 4×2 Grid (8 Cards)
-   Continuous background, thin white grid lines.
-   -------------------------------------------- */
-.hero--grid {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
+    Hero Cards — 8-card grid (4 up, 4 down)
+    -------------------------------------------- */
+.hero--cards {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  background-color: var(--color-black);
+}
+
+.hero-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 0;
+  gap: 2px;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(255, 255, 255);
+}
+
+.hero-card {
+  position: relative;
   overflow: hidden;
-  background-color: var(--color-black);
+  cursor: pointer;
 }
 
-/* Full-length grid lines — drawn above the background image */
-.hero--grid::before {
-  content: '';
+.hero-card__media {
   position: absolute;
   inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  /* 3 vertical lines + 1 horizontal line, end to end */
-  background-image:
-    linear-gradient(to right, rgba(245, 242, 237, 0.5) 6px, transparent 6px),
-    linear-gradient(to right, rgba(245, 242, 237, 0.5) 6px, transparent 6px),
-    linear-gradient(to right, rgba(245, 242, 237, 0.5) 6px, transparent 6px),
-    linear-gradient(to bottom, rgba(245, 242, 237, 0.5) 6px, transparent 6px);
-  background-size:
-    6px 100%,
-    6px 100%,
-    6px 100%,
-    100% 50%;
-  background-position:
-    25% 0,
-    50% 0,
-    75% 0,
-    0 100%;
-  background-repeat: no-repeat;
 }
 
-/* Global background — one continuous image across all cards */
-.hero__bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.hero__bg img {
+.hero-card__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
+  transition: transform var(--duration-slow) var(--ease);
 }
 
-/* Individual cards — visible card elements overlaid on the image */
-.hero-card {
-  position: relative;
+.hero-card:hover .hero-card__media img {
+  transform: scale(1.05);
+}
+
+.hero-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
   z-index: 1;
-  background: rgba(0, 0, 0, 0.15);
-  transition: background-color var(--duration-fast) var(--ease);
+  transition: opacity var(--duration-base) var(--ease);
 }
 
-.hero-card:hover {
-  background: rgba(0, 0, 0, 0.25);
+.hero-card:hover .hero-card__overlay {
+  opacity: 0.7;
 }
 
-/* Card 1 (R1C1) — blurred frosted glass */
-.hero-card--blur {
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.12);
-  display: flex;
-  align-items: flex-end;
-  padding: 24px;
-  box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.05);
-}
-
-.hero-card--blur:hover {
-  background: rgba(255, 255, 255, 0.18);
-}
-
-.hero-card__join {
-  font-size: var(--type-small);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-white);
-  opacity: 0.9;
-  transition: opacity var(--duration-fast) var(--ease);
-}
-
-.hero-card__join:hover {
-  opacity: 1;
-  color: var(--color-orange);
-}
-
-/* Cards 5, 6, 7 (R2C1-3) — numbered labels */
-.hero-card--label {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
-  padding: 24px;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.hero-card--label:hover {
-  background: rgba(0, 0, 0, 0.3);
-}
-
-.hero-card__marker {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.hero-card__number {
-  font-size: var(--type-small);
-  letter-spacing: 0.1em;
-  color: var(--color-white);
-  opacity: 0.9;
-}
-
-.hero-card__triangle {
-  width: 0;
-  height: 0;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-top: 10px solid #F5C518; /* yellow/gold */
-}
-
-.hero-card__label {
-  font-size: var(--type-small);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-white);
-  opacity: 0.9;
-}
-
-
-/* Top navigation icons (absolute positioned) */
-.hero__top-icons {
-  position: absolute;
-  top: 40px;
-  left: 0;
-  right: 0;
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  pointer-events: none;
-}
-
-.hero__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  background-color: var(--color-white);
-  border-radius: 50%;
-  color: var(--color-black);
-  pointer-events: auto;
-}
-
-.hero__icon--menu {
-  display: grid;
-  grid-template-columns: repeat(3, 4px);
-  grid-template-rows: repeat(2, 4px);
-  gap: 4px;
-  align-content: center;
-  justify-content: center;
-}
-
-.hero__icon--menu .dot {
-  width: 4px;
-  height: 4px;
-  background-color: var(--color-black);
-  border-radius: 50%;
-}
-
-.hero__icon--social {
-  position: absolute;
-  right: 40px;
-}
-
-.hero__icon--social:first-of-type {
-  right: 88px;
-}
-
-/* Bottom overlay content (spans multiple cards) */
-.hero__bottom {
+.hero-card__content {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 3;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: 0 60px 80px;
-  pointer-events: none;
+  z-index: 2;
+  padding: 32px;
 }
 
-.hero__headline {
-  font-family: var(--font-display);
-  font-size: clamp(80px, 10vw, 120px);
-  text-transform: uppercase;
-  color: var(--color-white);
-  line-height: 0.95;
-  display: flex;
-  gap: 24px;
-  align-items: baseline;
-}
-
-.hero__headline span {
-  white-space: nowrap;
-}
-
-.hero__paragraph {
+.hero-card__number {
+  display: block;
+  font-family: var(--font-body);
   font-size: var(--type-small);
-  line-height: 1.6;
+  letter-spacing: 0.12em;
+  color: var(--color-orange);
+  margin-bottom: 8px;
+}
+
+.hero-card__title {
+  font-family: var(--font-secondary);
+  font-size: clamp(20px, 2vw, 32px);
+  line-height: 1.15;
   color: var(--color-white);
-  opacity: 0.85;
-  max-width: 300px;
-  text-align: right;
-  pointer-events: auto;
+  font-weight: 400;
 }
 
 /* --------------------------------------------
-   Page Hero — smaller than home hero
-   -------------------------------------------- */
+    Page Hero — smaller than home hero
+    -------------------------------------------- */
 .hero--page {
   min-height: 70vh;
   align-items: flex-end;
@@ -795,64 +648,17 @@
    Responsive Components
    -------------------------------------------- */
 @media (max-width: 768px) {
-  /* Hero grid — stack cards on mobile */
-  .hero--grid {
+  .hero-cards {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    height: auto;
-    min-height: 100vh;
   }
 
-  .hero__bg {
-    grid-template-columns: 1fr;
+  .hero-card__content {
+    padding: 20px;
   }
 
-  .hero__bg img {
-    display: none;
-  }
-
-  .hero__bg img:first-child {
-    display: block;
-  }
-
-  .hero-card {
-    min-height: 25vh;
-  }
-
-  .hero-card--blur {
-    align-items: flex-start;
-  }
-
-  .hero-card--label {
-    align-items: flex-start;
-    justify-content: flex-end;
-  }
-
-  .hero__top-icons {
-    top: 100px;
-  }
-
-  .hero__bottom {
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-    padding: 0 24px 40px;
-  }
-
-  .hero__headline {
-    flex-direction: column;
-    gap: 8px;
-    font-size: var(--type-section);
-    text-align: center;
-  }
-
-  .hero__headline span {
-    white-space: normal;
-  }
-
-  .hero__paragraph {
-    text-align: center;
-    max-width: 100%;
+  .hero-card__title {
+    font-size: clamp(16px, 4vw, 24px);
   }
 
   .project-grid {
