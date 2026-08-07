@@ -512,6 +512,21 @@
   background-color: rgba(0, 0, 0, 0.35);
 }
 
+/* Orange triangle in top-right corner — bottom row cards 6, 7, 8 only */
+.hero-card:nth-child(6)::after,
+.hero-card:nth-child(7)::after,
+.hero-card:nth-child(8)::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-top: 28px solid var(--color-orange);
+  border-left: 28px solid transparent;
+  z-index: 2;
+}
+
 /* Bottom hero text — headline left, paragraph right */
 .hero-cards__footer {
   position: absolute;
