@@ -252,25 +252,27 @@
     footer.className = 'mega-footer';
 
     footer.innerHTML = `
+      <div class="mega-footer__bg-body">
+        <video autoplay muted loop playsinline poster="public/imgs/hero_garden.jpg">
+          <source src="https://res.cloudinary.com/dqlr9mio4/video/upload/v1786209466/From_Klickpin.com-_2603712281740834-pin-id-2603712281740834_nwrga9.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="mega-footer__overlay-body"></div>
       <div class="mega-footer__box">
         <div class="mega-footer__inner">
           <div class="mega-footer__bg">
-            <img src="public/imgs/hero_garden.jpg" alt="Landscape — green hills and ocean">
+            <video autoplay muted loop playsinline poster="public/imgs/hero_garden.jpg">
+              <source src="https://res.cloudinary.com/dqlr9mio4/video/upload/v1786209466/From_Klickpin.com-_2603712281740834-pin-id-2603712281740834_nwrga9.mp4" type="video/mp4">
+            </video>
           </div>
           <div class="mega-footer__overlay"></div>
 
-          <!-- Top row — logo, links, CTA -->
+          <!-- Top row — logo + contact info -->
           <div class="mega-footer__top">
             <a href="index.html" class="mega-footer__logo">Mantouvert</a>
-            <nav class="mega-footer__links">
-              <a href="index.html">Home</a>
-              <a href="projects.html">Projects</a>
-              <a href="services.html">Services</a>
-              <a href="about.html">About</a>
-              <a href="contact.html">Contact</a>
-            </nav>
-            <div class="mega-footer__actions">
-              <a href="contact.html" class="mega-footer__book">Request a Quote</a>
+            <div class="mega-footer__contact">
+              <a href="mailto:hello@mantouvert.com">hello@mantouvert.com</a>
+              <a href="tel:+212000000000">+212 000 000 000</a>
             </div>
           </div>
 
@@ -282,9 +284,11 @@
             <p class="mega-footer__subtitle">
               Design, build, repair and maintain complete outdoor environments — from luxury pools and cascading water features to gardens, villas and outdoor living spaces.
             </p>
-            <div class="mega-footer__ctas">
-              <a href="projects.html" class="mega-footer__btn--solid">Explore Projects</a>
-              <a href="contact.html" class="mega-footer__btn--outline">Request a Quote</a>
+            <div class="mega-footer__socials">
+              <a href="#" aria-label="Instagram">Instagram</a>
+              <a href="#" aria-label="Facebook">Facebook</a>
+              <a href="#" aria-label="LinkedIn">LinkedIn</a>
+              <a href="#" aria-label="Pinterest">Pinterest</a>
             </div>
           </div>
 

@@ -861,26 +861,52 @@ body.is-locked {
    Injected globally on every page via JS.
    -------------------------------------------- */
 
-/* Outer wrapper — light gray page background */
+/* Outer wrapper — light gray page background with video */
 .mega-footer {
+  position: relative;
   background-color: #F3F4F6;
   padding: 120px 40px 80px;
+  overflow: hidden;
+}
+
+/* Footer body background video */
+.mega-footer__bg-body {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.mega-footer__bg-body video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mega-footer__overlay-body {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.25);
 }
 
 /* The white framed box */
 .mega-footer__box {
+  position: relative;
+  z-index: 2;
   max-width: 1600px;
   margin-inline: auto;
   background-color: #FFFFFF;
   padding: 12px 20px;
-  border-radius: 8px;
+  border-radius: 0;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
 }
 
 /* Inner content wrapper — holds image & text */
 .mega-footer__inner {
   position: relative;
-  border-radius: 4px;
+  border-radius: 0;
   overflow: hidden;
   height: 800px;
   color: var(--color-white);
@@ -892,7 +918,10 @@ body.is-locked {
   z-index: 0;
 }
 
-.mega-footer__bg img {
+.mega-footer__bg img,
+.mega-footer__bg video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -940,46 +969,25 @@ body.is-locked {
   color: var(--color-orange);
 }
 
-.mega-footer__links {
+.mega-footer__contact {
   display: flex;
-  gap: 32px;
+  align-items: center;
+  gap: 24px;
 }
 
-.mega-footer__links a {
-  font-size: 14px;
+.mega-footer__contact a {
+  font-size: 13px;
   font-weight: 500;
+  letter-spacing: 0.04em;
   color: var(--color-black);
   transition:
     opacity var(--duration-fast) var(--ease),
     color var(--duration-fast) var(--ease);
 }
 
-.mega-footer__links a:hover {
+.mega-footer__contact a:hover {
   opacity: 0.8;
   color: var(--color-orange);
-}
-
-.mega-footer__actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.mega-footer__book {
-  background-color: #1e293b;
-  color: var(--color-white);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border-radius: 20px;
-  padding: 10px 20px;
-  transition:
-    background-color var(--duration-fast) var(--ease);
-}
-
-.mega-footer__book:hover {
-  background-color: var(--color-orange);
 }
 
 /* Center — brand statement */
@@ -1022,51 +1030,29 @@ body.is-locked {
   margin-top: 24px;
 }
 
-/* Bottom — CTA buttons */
-.mega-footer__ctas {
+/* Bottom — social links */
+.mega-footer__socials {
   display: flex;
-  gap: 16px;
+  gap: 24px;
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 40px;
 }
 
-.mega-footer__btn--solid {
-  background-color: var(--color-white);
-  color: var(--color-black);
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.08em;
+.mega-footer__socials a {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  border-radius: 30px;
-  padding: 12px 32px;
-  border: none;
+  color: var(--color-white);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  padding-bottom: 4px;
   transition:
-    background-color var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease),
     color var(--duration-fast) var(--ease);
 }
 
-.mega-footer__btn--solid:hover {
-  background-color: var(--color-orange);
-  color: var(--color-white);
-}
-
-.mega-footer__btn--outline {
-  background-color: transparent;
-  color: var(--color-white);
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border-radius: 30px;
-  padding: 12px 32px;
-  border: 2px solid var(--color-white);
-  transition:
-    border-color var(--duration-fast) var(--ease),
-    background-color var(--duration-fast) var(--ease);
-}
-
-.mega-footer__btn--outline:hover {
+.mega-footer__socials a:hover {
   border-color: var(--color-orange);
   color: var(--color-orange);
 }
@@ -1117,8 +1103,12 @@ body.is-locked {
     padding: 24px 20px;
   }
 
-  .mega-footer__links {
-    display: none;
+  .mega-footer__contact {
+    gap: 16px;
+  }
+
+  .mega-footer__contact a {
+    font-size: 12px;
   }
 
   .mega-footer__title {
@@ -1134,18 +1124,13 @@ body.is-locked {
     margin-top: 16px;
   }
 
-  .mega-footer__ctas {
-    flex-direction: column;
-    width: 100%;
-    max-width: 280px;
+  .mega-footer__socials {
+    gap: 16px;
     margin-top: 32px;
   }
 
-  .mega-footer__btn--solid,
-  .mega-footer__btn--outline {
-    display: block;
-    width: 100%;
-    text-align: center;
+  .mega-footer__socials a {
+    font-size: 12px;
   }
 
   .mega-footer__bottom {
