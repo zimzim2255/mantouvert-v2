@@ -278,9 +278,6 @@
 
           <!-- Center — brand statement -->
           <div class="mega-footer__center">
-            <h2 class="mega-footer__title">
-              Mantouvert<sup>®</sup>
-            </h2>
             <p class="mega-footer__subtitle">
               Design, build, repair and maintain complete outdoor environments — from luxury pools and cascading water features to gardens, villas and outdoor living spaces.
             </p>
@@ -291,6 +288,11 @@
               <a href="#" aria-label="Pinterest">Pinterest</a>
             </div>
           </div>
+
+          <!-- Title — bottom-left of the card -->
+          <h2 class="mega-footer__title">
+            Mantouvert<sup>®</sup>
+          </h2>
 
         </div>
       </div>

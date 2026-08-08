@@ -993,7 +993,7 @@ body.is-locked {
 /* Center — brand statement */
 .mega-footer__center {
   position: absolute;
-  top: 45%;
+  top: 38%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
@@ -1005,14 +1005,20 @@ body.is-locked {
   max-width: 900px;
 }
 
+/* Title — bottom-left of the card */
 .mega-footer__title {
+  position: absolute;
+  bottom: 60px;
+  left: 60px;
+  z-index: 10;
   font-family: var(--font-display);
-  font-size: clamp(64px, 10vw, 140px);
+  font-size: clamp(48px, 6vw, 90px);
   font-weight: 800;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   line-height: 1;
   color: var(--color-white);
+  margin: 0;
 }
 
 .mega-footer__title sup {
