@@ -128,9 +128,10 @@
 
 /* Logo */
 .nav__logo {
-  font-family: var(--font-secondary);
-  font-size: 18px;
-  letter-spacing: 0.04em;
+  font-family: var(--font-display); /* Monic DEMO Regular */
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
   color: var(--color-white);
   transition: color var(--duration-fast) var(--ease);
   text-transform: uppercase;
@@ -527,38 +528,55 @@
   z-index: 2;
 }
 
-/* Bottom hero text — headline left, paragraph right */
+/* Header text on bottom cards 6, 7, 8 */
+.hero-card__header {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  z-index: 3;
+  font-family: var(--font-display); /* Monic Sans Serif Ligature */
+  font-size: clamp(18px, 1.6vw, 26px);
+  line-height: 1.2;
+  color: var(--color-white);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+/* Bottom hero text — full-width headline, paragraph bottom-right */
 .hero-cards__footer {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 2;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  align-items: end;
-  gap: var(--gutter);
   padding: 0 60px 60px;
   pointer-events: none;
 }
 
 .hero-cards__headline {
   font-family: var(--font-display);
-  font-size: clamp(80px, 10vw, 120px);
+  font-size: clamp(80px, 9vw, 110px);
   line-height: 1;
   color: var(--color-white);
   text-transform: uppercase;
   letter-spacing: -0.01em;
+  white-space: nowrap;
+  width: 100%;
   margin: 0;
 }
 
 .hero-cards__paragraph {
+  position: absolute;
+  bottom: 60px;
+  right: 60px;
   max-width: 350px;
   font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.9);
-  margin: 0 0 16px;
+  margin: 0;
 }
 
 /* --------------------------------------------
