@@ -362,72 +362,76 @@
     const gallery = overlay.querySelector('.infinite-gallery');
     const canvas = overlay.querySelector('.infinite-gallery__canvas');
 
-    // Build a large masonry grid of cards
-    // All cards same width, only height varies — guarantees no overlap
-    const CARD_W = 320;
-    const GAP = 56;
-    const COL_COUNT = 12;
-    const startX = -(COL_COUNT * (CARD_W + GAP)) / 2;
+    // Preload images to get their natural aspect ratios
+    const imageRatios = [];
+    const preloadPromises = galleryImages.map((src) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          imageRatios.push({ src, ratio: img.naturalWidth / img.naturalHeight });
+          resolve();
+        };
+        img.onerror = () => {
+          imageRatios.push({ src, ratio: 1.5 }); // fallback 3:2
+          resolve();
+        };
+        img.src = src;
+      });
+    });
 
-    // Track the next Y position for each column
-    const colHeights = new Array(COL_COUNT).fill(0);
+    Promise.all(preloadPromises).then(() => {
+      // Build a large masonry grid of cards
+      // Card dimensions match each image's natural aspect ratio
+      const CARD_W = 320;
+      const GAP = 56;
+      const COL_COUNT = 12;
+      const startX = -(COL_COUNT * (CARD_W + GAP)) / 2;
 
-    // Height variants only (same width for all cards)
-    const heightVariants = [1, 1.2, 1.4, 1.6, 1.8, 2];
+      // Track the next Y position for each column
+      const colHeights = new Array(COL_COUNT).fill(0);
 
-    for (let i = 0; i < COL_COUNT * 8; i++) {
-      const idx = i % galleryImages.length;
-      const theme = cardThemes[i % cardThemes.length];
+      for (let i = 0; i < COL_COUNT * 8; i++) {
+        const idx = i % galleryImages.length;
+        const theme = cardThemes[i % cardThemes.length];
+        const ratio = imageRatios[idx] ? imageRatios[idx].ratio : 1.5;
 
-      // Pick the shortest column to place the next card
-      let col = 0;
-      for (let c = 1; c < COL_COUNT; c++) {
-        if (colHeights[c] < colHeights[col]) col = c;
-      }
-
-      const hFactor = heightVariants[i % heightVariants.length];
-      const w = CARD_W;
-      const h = CARD_W * hFactor;
-
-      const card = document.createElement('div');
-      card.className = `infinite-gallery__card ${theme.cls}`;
-      card.style.left = `${startX + col * (CARD_W + GAP)}px`;
-      card.style.top = `${colHeights[col]}px`;
-      card.style.width = `${w}px`;
-      card.style.height = `${h}px`;
-
-      // Advance this column's height by card height + gap
-      colHeights[col] += h + GAP;
-
-      // Image + text for taller cards; image only for square cards
-      if (hFactor > 1) {
-        const img = document.createElement('img');
-        img.src = galleryImages[idx];
-        img.alt = theme.title;
-        card.appendChild(img);
-
-        const text = document.createElement('div');
-        text.className = 'infinite-gallery__card-text';
-        text.innerHTML = `<h4>${theme.title}</h4><p>${theme.sub}</p>`;
-        card.appendChild(text);
-
-        // Taller cards get more image space
-        if (hFactor > 1.5) {
-          img.style.height = '65%';
-          text.style.height = '35%';
-        } else {
-          img.style.height = '55%';
-          text.style.height = '45%';
+        // Pick the shortest column to place the next card
+        let col = 0;
+        for (let c = 1; c < COL_COUNT; c++) {
+          if (colHeights[c] < colHeights[col]) col = c;
         }
-      } else {
+
+        // Card width fixed, height derived from image aspect ratio
+        const w = CARD_W;
+        const h = Math.round(CARD_W / ratio);
+
+        const card = document.createElement('div');
+        card.className = `infinite-gallery__card ${theme.cls}`;
+        card.style.left = `${startX + col * (CARD_W + GAP)}px`;
+        card.style.top = `${colHeights[col]}px`;
+        card.style.width = `${w}px`;
+        card.style.height = `${h}px`;
+
+        // Advance this column's height by card height + gap
+        colHeights[col] += h + GAP;
+
+        // Image fills the card; text overlay for some cards
         const img = document.createElement('img');
         img.src = galleryImages[idx];
         img.alt = theme.title;
         card.appendChild(img);
-      }
 
-      canvas.appendChild(card);
-    }
+        // Add text overlay for every 3rd card
+        if (i % 3 === 0) {
+          const text = document.createElement('div');
+          text.className = 'infinite-gallery__card-text';
+          text.innerHTML = `<h4>${theme.title}</h4><p>${theme.sub}</p>`;
+          card.appendChild(text);
+        }
+
+        canvas.appendChild(card);
+      }
+    });
 
     // --- Infinite drag pan with momentum (smooth rAF updates) ---
     let isDragging = false;
@@ -593,7 +597,21 @@
   document.querySelectorAll('.editorial-spread__explore').forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      openInfiniteGallery();
+      // Play the curtain reveal transition when opening the gallery
+      reveal.style.transition = 'none';
+      reveal.style.transform = 'translateY(-100%)';
+      void reveal.offsetHeight;
+      reveal.style.transition = `transform ${TRANSITION_MS}ms var(--ease)`;
+      reveal.style.transform = 'translateY(0%)';
+
+      setTimeout(() => {
+        openInfiniteGallery();
+        reveal.style.transform = 'translateY(100%)';
+        setTimeout(() => {
+          reveal.style.transition = 'none';
+          reveal.style.transform = 'translateY(-100%)';
+        }, TRANSITION_MS);
+      }, TRANSITION_MS);
     });
   });
 })();
