@@ -864,23 +864,23 @@ body.is-locked {
 /* Outer wrapper — light gray page background */
 .mega-footer {
   background-color: #F3F4F6;
-  padding-block: 80px;
+  padding: 120px 40px 80px;
 }
 
 /* The white framed box */
 .mega-footer__box {
-  max-width: 1400px;
+  max-width: 1600px;
   margin-inline: auto;
   background-color: #FFFFFF;
-  padding: 16px;
-  border-radius: 28px;
+  padding: 12px 20px;
+  border-radius: 8px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
 }
 
 /* Inner content wrapper — holds image & text */
 .mega-footer__inner {
   position: relative;
-  border-radius: 20px;
+  border-radius: 4px;
   overflow: hidden;
   height: 800px;
   color: var(--color-white);
@@ -921,7 +921,9 @@ body.is-locked {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 30px 40px;
+  padding: 20px 40px;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
 }
 
 .mega-footer__logo {
@@ -930,7 +932,7 @@ body.is-locked {
   font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-white);
+  color: var(--color-black);
   transition: color var(--duration-fast) var(--ease);
 }
 
@@ -946,7 +948,7 @@ body.is-locked {
 .mega-footer__links a {
   font-size: 14px;
   font-weight: 500;
-  color: var(--color-white);
+  color: var(--color-black);
   transition:
     opacity var(--duration-fast) var(--ease),
     color var(--duration-fast) var(--ease);
