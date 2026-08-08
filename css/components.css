@@ -748,8 +748,8 @@ body.is-locked {
   justify-content: space-between;
 }
 
-/* Right panel — full-bleed image */
-.editorial-spread__page--image {
+/* Top section — page number + intro columns */
+.editorial-spread__top {
   position: relative;
   overflow: hidden;
 }
