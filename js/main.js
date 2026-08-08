@@ -114,7 +114,7 @@
     window.scrollTo({ top, behavior: 'auto' });
   };
 
-  const playTransition = () => {
+  const playTransition = (direction) => {
     if (isTransitioning || !hero || !nextSection) return;
     isTransitioning = true;
     lockScroll();
@@ -127,38 +127,52 @@
     reveal.style.transition = `transform ${TRANSITION_MS}ms var(--ease)`;
     reveal.style.transform = 'translateY(0%)';
 
-    // After covering, jump to next section and slide curtain away
+    // After covering, jump to target section and slide curtain away
     setTimeout(() => {
-      scrollToNextSection();
+      if (direction > 0) {
+        scrollToNextSection();
+      } else {
+        scrollToTop();
+      }
 
-      // Phase 2: curtain slides away revealing the next section
+      // Phase 2: curtain slides away revealing the target section
       reveal.style.transform = 'translateY(100%)';
 
       setTimeout(() => {
         // Reset curtain for next trigger
         reveal.style.transition = 'none';
         reveal.style.transform = 'translateY(-100%)';
+        reveal.style.pointerEvents = 'none';
         unlockScroll();
         isTransitioning = false;
       }, TRANSITION_MS);
     }, TRANSITION_MS);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  };
+
   // Only trigger while the hero fills the viewport (top of page)
   const isAtHero = () => window.scrollY < window.innerHeight * 0.7;
 
-  // Wheel scroll acts as a trigger past the hero
+  // Wheel scroll acts as a trigger in both directions
   const onWheel = (e) => {
     if (isTransitioning) return;
     if (!isAtHero()) return; // normal scrolling after hero
-    if (e.deltaY <= 10) return;
+    if (Math.abs(e.deltaY) <= 10) return;
 
     // Block the native scroll and trigger the transition
     e.preventDefault();
-    playTransition();
+
+    if (e.deltaY > 0) {
+      playTransition(1); // scroll down → next section
+    } else {
+      playTransition(-1); // scroll up → back to top / hero
+    }
   };
 
-  // Touch scroll acts as a trigger past the hero
+  // Touch scroll acts as a trigger in both directions
   let touchStartY = 0;
   const onTouchStart = (e) => {
     touchStartY = e.touches[0].clientY;
@@ -169,18 +183,25 @@
     if (!isAtHero()) return;
     const touchEndY = e.changedTouches[0].clientY;
     const delta = touchStartY - touchEndY;
-    if (delta < 30) return; // swipe up only
+    if (Math.abs(delta) < 30) return;
 
-    playTransition();
+    if (delta > 0) {
+      playTransition(1); // swipe up → next section
+    } else {
+      playTransition(-1); // swipe down → back to top / hero
+    }
   };
 
-  // Keyboard scroll acts as a trigger past the hero
+  // Keyboard scroll acts as a trigger in both directions
   const onKeyDown = (e) => {
     if (isTransitioning) return;
     if (!isAtHero()) return;
     if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
       e.preventDefault();
-      playTransition();
+      playTransition(1);
+    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault();
+      playTransition(-1);
     }
   };
 
