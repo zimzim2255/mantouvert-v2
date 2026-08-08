@@ -292,12 +292,13 @@
             </div>
           </div>
 
-          <!-- Bottom bar — copyright -->
-          <div class="mega-footer__bottom">
-            <p>© 2025 Mantouvert. All rights reserved.</p>
-            <p>Pool Construction · Garden Design · Landscaping · Villas</p>
-          </div>
         </div>
+      </div>
+
+      <!-- Bottom bar — copyright -->
+      <div class="mega-footer__bottom">
+        <p>© 2025 Mantouvert. All rights reserved.</p>
+        <p>Pool Construction · Garden Design · Landscaping · Villas</p>
       </div>
     `;
 
