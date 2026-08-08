@@ -815,6 +815,239 @@ body.is-locked {
   font-family: var(--font-body);
 }
 
+/* Explore all projects link */
+.editorial-spread__explore {
+  display: inline-block;
+  margin-top: 24px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #000000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  padding-bottom: 4px;
+  transition:
+    border-color var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease);
+}
+
+.editorial-spread__explore:hover {
+  border-color: var(--color-orange);
+  color: var(--color-orange);
+}
+
+/* Gallery overlay — expands smoothly from the card */
+.gallery-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background-color: rgba(0, 0, 0, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--duration-slow) var(--ease),
+    visibility var(--duration-slow) var(--ease);
+}
+
+.gallery-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.gallery-overlay__close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  z-index: 10;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-white);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease);
+}
+
+.gallery-overlay__close:hover {
+  color: var(--color-orange);
+}
+
+.gallery-overlay__main {
+  width: 80%;
+  max-width: 1200px;
+  margin-bottom: 40px;
+  overflow: hidden;
+  transform: scale(0.92);
+  transition: transform var(--duration-slow) var(--ease);
+}
+
+.gallery-overlay.is-open .gallery-overlay__main {
+  transform: scale(1);
+}
+
+.gallery-overlay__main img {
+  width: 100%;
+  height: 60vh;
+  object-fit: cover;
+}
+
+.gallery-overlay__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 80%;
+  max-width: 1200px;
+}
+
+.gallery-overlay__grid img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  cursor: pointer;
+  opacity: 0.7;
+  transition:
+    opacity var(--duration-fast) var(--ease),
+    transform var(--duration-fast) var(--ease);
+}
+
+.gallery-overlay__grid img:hover {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+/* Infinite Drag Gallery — flat "museum in space" canvas */
+.infinite-gallery {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  cursor: grab;
+  background-color: #E5E5E5;
+  background-image:
+    radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.infinite-gallery.is-dragging {
+  cursor: grabbing;
+}
+
+.infinite-gallery__canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.infinite-gallery__title {
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  font-family: var(--font-secondary);
+  font-size: clamp(24px, 3vw, 40px);
+  color: var(--color-black);
+  letter-spacing: 0.02em;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* Masonry card in the infinite canvas */
+.infinite-gallery__card {
+  position: absolute;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.infinite-gallery__card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Card color variants */
+.infinite-gallery__card--white {
+  background-color: #FFFFFF;
+}
+
+.infinite-gallery__card--dark {
+  background-color: #1A1A1A;
+}
+
+.infinite-gallery__card--brown {
+  background-color: #4A3B32;
+}
+
+.infinite-gallery__card--beige {
+  background-color: #D4C4B0;
+}
+
+/* Card typography */
+.infinite-gallery__card-text {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  flex: 1;
+}
+
+.infinite-gallery__card-text h4 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.infinite-gallery__card-text p {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.infinite-gallery__card--dark h4,
+.infinite-gallery__card--brown h4 {
+  color: var(--color-white);
+}
+
+.infinite-gallery__card--dark p,
+.infinite-gallery__card--brown p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.infinite-gallery__card--white h4,
+.infinite-gallery__card--beige h4 {
+  color: var(--color-black);
+}
+
+.infinite-gallery__card--white p,
+.infinite-gallery__card--beige p {
+  color: var(--color-stone);
+}
+
 /* Right panel — full-bleed image */
 .editorial-spread__page--image {
   position: relative;
