@@ -363,69 +363,73 @@
     const canvas = overlay.querySelector('.infinite-gallery__canvas');
 
     // Build a large masonry grid of cards
-    // Random varying sizes (portrait & landscape) + color themes
-    const CARD_W = 260;
-    const GAP = 28;
-    const COL_COUNT = 14;
-    const ROW_COUNT = 9;
+    // All cards same width, only height varies — guarantees no overlap
+    const CARD_W = 320;
+    const GAP = 56;
+    const COL_COUNT = 12;
     const startX = -(COL_COUNT * (CARD_W + GAP)) / 2;
-    const startY = -(ROW_COUNT * (CARD_W + GAP)) / 2;
 
-    for (let r = 0; r < ROW_COUNT; r++) {
-      for (let c = 0; c < COL_COUNT; c++) {
-        const idx = (r * COL_COUNT + c) % galleryImages.length;
-        const theme = cardThemes[(r * COL_COUNT + c) % cardThemes.length];
+    // Track the next Y position for each column
+    const colHeights = new Array(COL_COUNT).fill(0);
 
-        // Random aspect: 1x1, 1x1.4, 1.4x1, 1x2
-        const variants = [
-          { w: 1, h: 1 },
-          { w: 1, h: 1.4 },
-          { w: 1.4, h: 1 },
-          { w: 1, h: 2 }
-        ];
-        const v = variants[(r + c) % variants.length];
-        const w = CARD_W * v.w;
-        const h = CARD_W * v.h;
+    // Height variants only (same width for all cards)
+    const heightVariants = [1, 1.2, 1.4, 1.6, 1.8, 2];
 
-        const card = document.createElement('div');
-        card.className = `infinite-gallery__card ${theme.cls}`;
-        card.style.left = `${startX + c * (CARD_W + GAP)}px`;
-        card.style.top = `${startY + r * (CARD_W + GAP)}px`;
-        card.style.width = `${w}px`;
-        card.style.height = `${h}px`;
+    for (let i = 0; i < COL_COUNT * 8; i++) {
+      const idx = i % galleryImages.length;
+      const theme = cardThemes[i % cardThemes.length];
 
-        // Image half + text half for portrait cards; image only for landscape
-        if (v.h > 1) {
-          const img = document.createElement('img');
-          img.src = galleryImages[idx];
-          img.alt = theme.title;
-          card.appendChild(img);
-
-          const text = document.createElement('div');
-          text.className = 'infinite-gallery__card-text';
-          text.innerHTML = `<h4>${theme.title}</h4><p>${theme.sub}</p>`;
-          card.appendChild(text);
-
-          // For h=2 portrait cards, image takes top half and text bottom
-          if (v.h > 1.5) {
-            img.style.height = '60%';
-            text.style.height = '40%';
-          } else {
-            img.style.height = '50%';
-            text.style.height = '50%';
-          }
-        } else {
-          const img = document.createElement('img');
-          img.src = galleryImages[idx];
-          img.alt = theme.title;
-          card.appendChild(img);
-        }
-
-        canvas.appendChild(card);
+      // Pick the shortest column to place the next card
+      let col = 0;
+      for (let c = 1; c < COL_COUNT; c++) {
+        if (colHeights[c] < colHeights[col]) col = c;
       }
+
+      const hFactor = heightVariants[i % heightVariants.length];
+      const w = CARD_W;
+      const h = CARD_W * hFactor;
+
+      const card = document.createElement('div');
+      card.className = `infinite-gallery__card ${theme.cls}`;
+      card.style.left = `${startX + col * (CARD_W + GAP)}px`;
+      card.style.top = `${colHeights[col]}px`;
+      card.style.width = `${w}px`;
+      card.style.height = `${h}px`;
+
+      // Advance this column's height by card height + gap
+      colHeights[col] += h + GAP;
+
+      // Image + text for taller cards; image only for square cards
+      if (hFactor > 1) {
+        const img = document.createElement('img');
+        img.src = galleryImages[idx];
+        img.alt = theme.title;
+        card.appendChild(img);
+
+        const text = document.createElement('div');
+        text.className = 'infinite-gallery__card-text';
+        text.innerHTML = `<h4>${theme.title}</h4><p>${theme.sub}</p>`;
+        card.appendChild(text);
+
+        // Taller cards get more image space
+        if (hFactor > 1.5) {
+          img.style.height = '65%';
+          text.style.height = '35%';
+        } else {
+          img.style.height = '55%';
+          text.style.height = '45%';
+        }
+      } else {
+        const img = document.createElement('img');
+        img.src = galleryImages[idx];
+        img.alt = theme.title;
+        card.appendChild(img);
+      }
+
+      canvas.appendChild(card);
     }
 
-    // --- Infinite drag pan with momentum ---
+    // --- Infinite drag pan with momentum (smooth rAF updates) ---
     let isDragging = false;
     let startXPos = 0;
     let startYPos = 0;
@@ -439,6 +443,9 @@
     let lastMoveY = 0;
     let lastMoveTime = 0;
     let inertiaRAF = null;
+    let dragRAF = null;
+    let mouseX = 0;
+    let mouseY = 0;
 
     const applyPan = () => {
       canvas.style.transform = `translate(${panX}px, ${panY}px)`;
@@ -449,6 +456,19 @@
         cancelAnimationFrame(inertiaRAF);
         inertiaRAF = null;
       }
+      if (dragRAF) {
+        cancelAnimationFrame(dragRAF);
+        dragRAF = null;
+      }
+    };
+
+    // Smooth drag loop — reads latest mouse pos each rAF
+    const dragLoop = () => {
+      if (!isDragging) return;
+      panX = startPanX + (mouseX - startXPos);
+      panY = startPanY + (mouseY - startYPos);
+      applyPan();
+      dragRAF = requestAnimationFrame(dragLoop);
     };
 
     const startDrag = (x, y) => {
@@ -458,29 +478,32 @@
       startYPos = y;
       startPanX = panX;
       startPanY = panY;
+      mouseX = x;
+      mouseY = y;
       velocityX = 0;
       velocityY = 0;
       lastMoveX = x;
       lastMoveY = y;
       lastMoveTime = performance.now();
       gallery.classList.add('is-dragging');
+      dragRAF = requestAnimationFrame(dragLoop);
     };
 
     const moveDrag = (x, y) => {
       if (!isDragging) return;
 
-      // Momentum velocity from last few frames
+      // Momentum velocity from last few frames (scaled down for gentle glide)
       const now = performance.now();
       const dt = Math.max(1, now - lastMoveTime);
-      velocityX = ((x - lastMoveX) / dt) * 1000 * 0.6;
-      velocityY = ((y - lastMoveY) / dt) * 1000 * 0.6;
+      velocityX = ((x - lastMoveX) / dt) * 1000 * 1.17;
+      velocityY = ((y - lastMoveY) / dt) * 1000 * 1.17;
       lastMoveX = x;
       lastMoveY = y;
       lastMoveTime = now;
 
-      panX = startPanX + (x - startXPos);
-      panY = startPanY + (y - startYPos);
-      applyPan();
+      // Store latest position; dragLoop applies it smoothly
+      mouseX = x;
+      mouseY = y;
     };
 
     const endDrag = () => {
@@ -488,14 +511,19 @@
       isDragging = false;
       gallery.classList.remove('is-dragging');
 
-      // Start inertia with captured velocity
-      let vx = Math.max(-60, Math.min(60, velocityX));
-      let vy = Math.max(-60, Math.min(60, velocityY));
+      if (dragRAF) {
+        cancelAnimationFrame(dragRAF);
+        dragRAF = null;
+      }
+
+      // Start inertia with captured velocity (strong friction for slow, smooth glide)
+      let vx = Math.max(-20, Math.min(20, velocityX));
+      let vy = Math.max(-20, Math.min(20, velocityY));
 
       const step = () => {
-        vx *= 0.92;
-        vy *= 0.92;
-        if (Math.abs(vx) < 0.5 && Math.abs(vy) < 0.5) {
+        vx *= 0.90;
+        vy *= 0.90;
+        if (Math.abs(vx) < 0.1 && Math.abs(vy) < 0.1) {
           inertiaRAF = null;
           return;
         }
