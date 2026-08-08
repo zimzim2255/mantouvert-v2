@@ -727,15 +727,16 @@ body.is-locked {
    -------------------------------------------- */
 .editorial-spread {
   background-color: #E5E5E5;
-  padding-block: 80px;
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+  padding: 0;
 }
 
 .editorial-spread__book {
-  max-width: 1400px;
-  margin-inline: auto;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
 }
 
 /* Left panel — deep forest green */
@@ -745,7 +746,12 @@ body.is-locked {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 700px;
+}
+
+/* Right panel — full-bleed image */
+.editorial-spread__page--image {
+  position: relative;
+  overflow: hidden;
 }
 
 /* Top section — page number + intro columns */
