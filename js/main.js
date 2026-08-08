@@ -97,6 +97,11 @@
     const main = document.querySelector('main');
     if (!main) return;
     sections = Array.from(main.children);
+
+    // Include the mega footer as a transition section
+    const footer = document.querySelector('.mega-footer');
+    if (footer) sections.push(footer);
+
     currentSection = 0;
   };
 
@@ -228,4 +233,73 @@
     collectSections();
     onScrollTrack();
   });
+
+  /* --------------------------------------------
+     Mega Footer — injected globally on every page.
+     Full-width background image with overlaid
+     navigation, brand statement, CTA buttons and
+     copyright bar.
+     -------------------------------------------- */
+  const injectMegaFooter = () => {
+    if (document.querySelector('.mega-footer')) return;
+
+    // Remove any existing old-style footer so this is the only one
+    document.querySelectorAll('.site-footer').forEach((oldFooter) => {
+      oldFooter.remove();
+    });
+
+    const footer = document.createElement('footer');
+    footer.className = 'mega-footer';
+
+    footer.innerHTML = `
+      <div class="mega-footer__box">
+        <div class="mega-footer__inner">
+          <div class="mega-footer__bg">
+            <img src="public/imgs/hero_garden.jpg" alt="Landscape — green hills and ocean">
+          </div>
+          <div class="mega-footer__overlay"></div>
+
+          <!-- Top row — logo, links, CTA -->
+          <div class="mega-footer__top">
+            <a href="index.html" class="mega-footer__logo">Mantouvert</a>
+            <nav class="mega-footer__links">
+              <a href="index.html">Home</a>
+              <a href="projects.html">Projects</a>
+              <a href="services.html">Services</a>
+              <a href="about.html">About</a>
+              <a href="contact.html">Contact</a>
+            </nav>
+            <div class="mega-footer__actions">
+              <a href="contact.html" class="mega-footer__book">Request a Quote</a>
+            </div>
+          </div>
+
+          <!-- Center — brand statement -->
+          <div class="mega-footer__center">
+            <h2 class="mega-footer__title">
+              Mantouvert<sup>®</sup>
+            </h2>
+            <p class="mega-footer__subtitle">
+              Design, build, repair and maintain complete outdoor environments — from luxury pools and cascading water features to gardens, villas and outdoor living spaces.
+            </p>
+            <div class="mega-footer__ctas">
+              <a href="projects.html" class="mega-footer__btn--solid">Explore Projects</a>
+              <a href="contact.html" class="mega-footer__btn--outline">Request a Quote</a>
+            </div>
+          </div>
+
+          <!-- Bottom bar — copyright -->
+          <div class="mega-footer__bottom">
+            <p>© 2025 Mantouvert. All rights reserved.</p>
+            <p>Pool Construction · Garden Design · Landscaping · Villas</p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(footer);
+  };
+
+  injectMegaFooter();
+  collectSections();
 })();
