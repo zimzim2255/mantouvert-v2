@@ -580,10 +580,11 @@
 }
 
 /* --------------------------------------------
-    Page Hero — smaller than home hero
+    Page Hero — full viewport so the section
+    always fills the visible display cleanly.
     -------------------------------------------- */
 .hero--page {
-  min-height: 70vh;
+  min-height: 100vh;
   align-items: flex-end;
 }
 

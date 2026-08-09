@@ -113,11 +113,43 @@
     document.body.classList.remove('is-locked');
   };
 
+  // Returns the scroll position a section should land on so it fills the
+  // viewport: centered for sections shorter than the viewport, top-aligned
+  // for sections taller than the viewport (explored with native scrolling).
+  const getSectionSnapTop = (index) => {
+    const sec = sections[index];
+    if (!sec) return 0;
+    const rect = sec.getBoundingClientRect();
+    const secTop = rect.top + window.scrollY;
+    const secHeight = rect.height;
+    const vh = window.innerHeight;
+    let snap;
+    if (secHeight <= vh) {
+      snap = Math.max(0, secTop - (vh - secHeight) / 2);
+    } else {
+      snap = secTop;
+    }
+    // Clamp to the page's actual scrollable range
+    const maxScroll = Math.max(0, document.documentElement.scrollHeight - vh);
+    return Math.max(0, Math.min(snap, maxScroll));
+  };
+
+  // True when the section is taller than the viewport, so it needs
+  // native scrolling to be explored instead of the curtain transition.
+  const sectionNeedsScroll = (sec) => {
+    if (!sec) return false;
+    return sec.getBoundingClientRect().height > window.innerHeight;
+  };
+
   const scrollToSection = (index) => {
     if (index < 0 || index >= sections.length) return;
-    const target = sections[index];
-    const top = target.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({ top, behavior: 'auto' });
+    const top = getSectionSnapTop(index);
+    try {
+      window.scrollTo({ top, behavior: 'instant' });
+    } catch (err) {
+      // Fallback for browsers without 'instant' behavior support
+      window.scrollTo(0, top);
+    }
   };
 
   const playTransition = (direction) => {
@@ -155,18 +187,26 @@
     }, TRANSITION_MS);
   };
 
-  // True when the scroll position is at the top edge of the current section
+  // True when the scroll position is at the snap position of the current section
   const isNearCurrentTop = () => {
-    const sec = sections[currentSection];
-    if (!sec) return false;
-    const secTop = sec.getBoundingClientRect().top + window.scrollY;
-    return Math.abs(window.scrollY - secTop) < 60;
+    if (!sections[currentSection]) return false;
+    const snapTop = getSectionSnapTop(currentSection);
+    return Math.abs(window.scrollY - snapTop) < 60;
   };
 
   // Wheel scroll acts as a trigger in both directions
   const onWheel = (e) => {
     if (isTransitioning) return;
     if (Math.abs(e.deltaY) < 10) return;
+
+    const current = sections[currentSection];
+
+    // Tall sections need native scrolling to be explored — only an upward
+    // scroll at their top returns to the previous section.
+    if (current && sectionNeedsScroll(current) && e.deltaY > 0 && isNearCurrentTop()) {
+      return;
+    }
+
     if (!isNearCurrentTop()) return; // normal scrolling within a section
 
     if (e.deltaY > 0 && currentSection < sections.length - 1) {
@@ -186,10 +226,20 @@
 
   const onTouchEnd = (e) => {
     if (isTransitioning) return;
-    if (!isNearCurrentTop()) return;
+
     const touchEndY = e.changedTouches[0].clientY;
     const delta = touchStartY - touchEndY;
     if (Math.abs(delta) < 30) return;
+
+    const current = sections[currentSection];
+
+    // Tall sections need native scrolling to be explored — only an upward
+    // swipe at their top returns to the previous section.
+    if (current && sectionNeedsScroll(current) && delta > 0 && isNearCurrentTop()) {
+      return;
+    }
+
+    if (!isNearCurrentTop()) return;
 
     if (delta > 0 && currentSection < sections.length - 1) {
       playTransition(1); // swipe up → next section
@@ -202,7 +252,15 @@
   const onKeyDown = (e) => {
     if (isTransitioning) return;
     if (!isNearCurrentTop()) return;
-    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+
+    const current = sections[currentSection];
+    const isDownKey = e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ';
+
+    // Tall sections need native scrolling to be explored — let the browser
+    // scroll them instead of jumping to the next section.
+    if (current && sectionNeedsScroll(current) && isDownKey) return;
+
+    if (isDownKey) {
       e.preventDefault();
       if (currentSection < sections.length - 1) playTransition(1);
     } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
@@ -211,14 +269,40 @@
     }
   };
 
-  // Track which section the scroll position is in (supports reload mid-page)
+  // Track which section the scroll position is in (supports reload mid-page).
+  // Short sections are owned by the nearest snap position; tall sections are
+  // owned when their range contains the viewport center.
   const onScrollTrack = () => {
     const scrollY = window.scrollY;
     let best = 0;
+    let bestDist = Infinity;
+
     sections.forEach((sec, i) => {
-      const secTop = sec.getBoundingClientRect().top + scrollY;
-      if (secTop <= scrollY + window.innerHeight * 0.4) best = i;
+      const rect = sec.getBoundingClientRect();
+      const secTop = rect.top + scrollY;
+
+      if (rect.height <= window.innerHeight) {
+        const dist = Math.abs(scrollY - getSectionSnapTop(i));
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = i;
+        }
+      } else {
+        const secBottom = secTop + rect.height;
+        const viewCenter = scrollY + window.innerHeight / 2;
+        if (viewCenter >= secTop && viewCenter <= secBottom) {
+          best = i;
+          bestDist = 0;
+        } else {
+          const dist = Math.abs(scrollY - secTop);
+          if (dist < bestDist) {
+            bestDist = dist;
+            best = i;
+          }
+        }
+      }
     });
+
     currentSection = best;
   };
 
@@ -309,6 +393,7 @@
 
   injectMegaFooter();
   collectSections();
+  onScrollTrack();
 
   /* --------------------------------------------
      Infinite Drag Gallery — flat "museum in space"

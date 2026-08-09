@@ -24,6 +24,7 @@
 .section,
 section {
   padding-block: var(--section-pad-desktop); /* 180px top + bottom */
+  min-height: 100vh; /* each section fills the viewport for clean curtain transitions */
 }
 
 /* --------------------------------------------
