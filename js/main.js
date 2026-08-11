@@ -338,7 +338,7 @@
     footer.innerHTML = `
       <div class="mega-footer__bg-body">
         <video autoplay muted loop playsinline poster="public/imgs/hero_garden.jpg">
-          <source src="https://res.cloudinary.com/dqlr9mio4/video/upload/v1786209466/From_Klickpin.com-_2603712281740834-pin-id-2603712281740834_nwrga9.mp4" type="video/mp4">
+          <source src="https://res.cloudinary.com/dqlr9mio4/video/upload/v1786397926/From_Klickpin.com-_Explore_Must-save_road_trip_essentials_for_your_next_Pinterest_save_with_thoughtful_touches_that_make_everything_feel_complete-_wn4yvr.mp4" type="video/mp4">
         </video>
       </div>
       <div class="mega-footer__overlay-body"></div>
@@ -346,7 +346,7 @@
         <div class="mega-footer__inner">
           <div class="mega-footer__bg">
             <video autoplay muted loop playsinline poster="public/imgs/hero_garden.jpg">
-              <source src="https://res.cloudinary.com/dqlr9mio4/video/upload/v1786209466/From_Klickpin.com-_2603712281740834-pin-id-2603712281740834_nwrga9.mp4" type="video/mp4">
+              <source src="https://res.cloudinary.com/dqlr9mio4/video/upload/v1786397926/From_Klickpin.com-_Explore_Must-save_road_trip_essentials_for_your_next_Pinterest_save_with_thoughtful_touches_that_make_everything_feel_complete-_wn4yvr.mp4" type="video/mp4">
             </video>
           </div>
           <div class="mega-footer__overlay"></div>
