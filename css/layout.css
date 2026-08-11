@@ -252,6 +252,10 @@ section {
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding-inline: var(--gutter-mobile); /* 20px */
+  }
+
   .section,
   section {
     padding-block: var(--section-pad-mobile); /* 90px */
@@ -278,5 +282,30 @@ section {
 
   .site-footer .container {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding-inline: 16px;
+  }
+
+  .section,
+  section {
+    padding-block: var(--section-pad-small); /* 60px */
+  }
+
+  .grid,
+  .grid--split,
+  .craftsmanship__grid {
+    gap: 24px;
+  }
+
+  .hero__actions {
+    gap: 16px;
+  }
+
+  .section-head {
+    margin-bottom: 32px;
   }
 }

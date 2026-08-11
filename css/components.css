@@ -1503,4 +1503,281 @@ body.is-locked {
   .site-footer__nav ul {
     text-align: left;
   }
+
+  /* Nav menu — smaller links on mobile */
+  .nav__links {
+    gap: 28px;
+  }
+
+  .nav__link {
+    font-size: clamp(28px, 8vw, 40px);
+  }
+
+  .nav__link--cta {
+    padding: 14px 32px;
+    font-size: 13px;
+  }
+
+  /* Hero cards — smaller header text */
+  .hero-card__header {
+    font-size: clamp(14px, 3.5vw, 20px);
+    top: 10px;
+    left: 12px;
+  }
+
+  /* Editorial spread — smaller title */
+  .editorial-spread__title {
+    font-size: clamp(36px, 10vw, 56px);
+  }
+
+  /* Gallery overlay — stack grid */
+  .gallery-overlay__grid {
+    grid-template-columns: 1fr;
+    width: 90%;
+  }
+
+  .gallery-overlay__main {
+    width: 90%;
+  }
+
+  .gallery-overlay__main img {
+    height: 40vh;
+  }
+
+  /* Infinite gallery — smaller cards */
+  .infinite-gallery__title {
+    font-size: clamp(20px, 5vw, 28px);
+    top: 70px;
+  }
+
+  /* Buttons — full width on mobile */
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero__actions .btn {
+    width: auto;
+  }
+
+  /* CTA title — smaller */
+  .cta__title {
+    font-size: clamp(40px, 12vw, 64px);
+  }
+
+  /* Footer logo — smaller */
+  .site-footer__logo {
+    font-size: clamp(40px, 10vw, 60px);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Nav menu — tighter */
+  .nav__links {
+    gap: 24px;
+  }
+
+  .nav__link {
+    font-size: clamp(24px, 7vw, 32px);
+  }
+
+  /* Hero cards — single column on very small screens */
+  .hero-cards {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+
+  .hero-card__header {
+    font-size: 13px;
+  }
+
+  .hero-cards__headline {
+    font-size: clamp(36px, 11vw, 52px);
+    white-space: normal;
+  }
+
+  .hero-cards__paragraph {
+    position: static;
+    max-width: 100%;
+    margin-top: 16px;
+    font-size: 13px;
+  }
+
+  .hero-cards__footer {
+    padding: 0 16px 24px;
+  }
+
+  /* Editorial spread — tighter padding */
+  .editorial-spread__page--green,
+  .editorial-spread__page--blue,
+  .editorial-spread__page--brown {
+    padding: 32px 20px;
+  }
+
+  .editorial-spread__top {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .editorial-spread__title {
+    font-size: clamp(32px, 9vw, 44px);
+  }
+
+  .editorial-spread__desc {
+    font-size: 14px;
+  }
+
+  .editorial-spread__img-num {
+    top: 20px;
+    right: 20px;
+  }
+
+  .editorial-spread__caption {
+    bottom: 20px;
+    left: 20px;
+    font-size: 9px;
+  }
+
+  /* Mega footer — tighter */
+  .mega-footer {
+    padding: 24px 12px 40px;
+  }
+
+  .mega-footer__inner {
+    height: 480px;
+  }
+
+  .mega-footer__top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .mega-footer__contact {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .mega-footer__title {
+    font-size: clamp(36px, 12vw, 52px);
+    bottom: 16px;
+    left: 16px;
+  }
+
+  .mega-footer__subtitle {
+    font-size: 13px;
+    margin-top: 12px;
+  }
+
+  .mega-footer__socials {
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .mega-footer__socials a {
+    font-size: 11px;
+  }
+
+  .mega-footer__bottom {
+    padding: 8px 12px;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .mega-footer__bottom p {
+    font-size: 9px;
+  }
+
+  /* Gallery overlay — tighter */
+  .gallery-overlay__close {
+    top: 16px;
+    right: 16px;
+    font-size: 12px;
+  }
+
+  .gallery-overlay__grid {
+    gap: 8px;
+  }
+
+  /* Contact details — tighter */
+  .contact-details {
+    padding: 24px;
+  }
+
+  /* Stats — tighter */
+  .stat {
+    padding-top: 24px;
+  }
+
+  /* Services — tighter */
+  .services__item {
+    padding-block: 24px;
+  }
+
+  .services__item a {
+    gap: 16px;
+  }
+
+  .services__name {
+    font-size: clamp(24px, 6vw, 32px);
+  }
+
+  /* Project cards — tighter */
+  .project-card__media {
+    margin-bottom: 16px;
+  }
+
+  .project-card__title {
+    font-size: clamp(24px, 6vw, 32px);
+  }
+
+  /* Buttons — smaller padding */
+  .btn {
+    padding: 16px 32px;
+    font-size: 13px;
+  }
+
+  /* Hero — smaller padding */
+  .hero {
+    padding-bottom: 48px;
+  }
+
+  .hero__title {
+    margin-bottom: 20px;
+  }
+
+  .hero__intro {
+    margin-bottom: 32px;
+    font-size: 16px;
+  }
+
+  /* Section head — tighter */
+  .section-head__title {
+    font-size: clamp(28px, 7vw, 40px);
+  }
+
+  /* Testimonials — tighter */
+  .testimonial {
+    padding-block: 24px;
+  }
+
+  .testimonial__quote {
+    font-size: clamp(22px, 6vw, 30px);
+    margin-bottom: 24px;
+  }
+
+  /* Next project — tighter */
+  .next-project__title {
+    font-size: clamp(28px, 7vw, 40px);
+  }
+
+  /* Footer meta — stack */
+  .site-footer__meta {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 60px;
+    padding-top: 24px;
+  }
 }

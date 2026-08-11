@@ -218,34 +218,80 @@
     }
   };
 
-  // Touch scroll acts as a trigger in both directions
+  // Touch scroll acts as a trigger in both directions.
+  // We intercept touchmove to prevent native scrolling at section
+  // boundaries, so the curtain transition fires reliably on mobile.
   let touchStartY = 0;
+  let touchStartX = 0;
+  let touchActive = false;
+  let touchTriggered = false;
+
   const onTouchStart = (e) => {
+    if (isTransitioning) return;
     touchStartY = e.touches[0].clientY;
+    touchStartX = e.touches[0].clientX;
+    touchActive = true;
+    touchTriggered = false;
   };
 
-  const onTouchEnd = (e) => {
-    if (isTransitioning) return;
+  const onTouchMove = (e) => {
+    if (!touchActive || isTransitioning || touchTriggered) return;
 
-    const touchEndY = e.changedTouches[0].clientY;
-    const delta = touchStartY - touchEndY;
-    if (Math.abs(delta) < 30) return;
+    const touchY = e.touches[0].clientY;
+    const touchX = e.touches[0].clientX;
+    const deltaY = touchStartY - touchY;
+    const deltaX = touchStartX - touchX;
+
+    // Only handle vertical swipes (ignore horizontal panning)
+    if (Math.abs(deltaX) > Math.abs(deltaY)) return;
+    if (Math.abs(deltaY) < 20) return;
 
     const current = sections[currentSection];
 
-    // Tall sections need native scrolling to be explored — only an upward
-    // swipe at their top returns to the previous section.
-    if (current && sectionNeedsScroll(current) && delta > 0 && isNearCurrentTop()) {
-      return;
+    // Tall sections need native scrolling to be explored — let the
+    // browser handle them naturally.
+    if (current && sectionNeedsScroll(current)) {
+      // Only intercept when at the very top of a tall section and
+      // swiping up (to go to previous section), or at the very bottom
+      // and swiping down (to go to next section).
+      const rect = current.getBoundingClientRect();
+      const atTop = rect.top >= -10;
+      const atBottom = rect.bottom <= window.innerHeight + 10;
+
+      if (deltaY > 0 && atTop && currentSection < sections.length - 1) {
+        // At top of tall section, swiping up → go to next section
+        e.preventDefault();
+        touchTriggered = true;
+        playTransition(1);
+        return;
+      }
+      if (deltaY < 0 && atBottom && currentSection > 0) {
+        // At bottom of tall section, swiping down → go to previous section
+        e.preventDefault();
+        touchTriggered = true;
+        playTransition(-1);
+        return;
+      }
+      return; // let native scrolling handle it
     }
 
+    // Short sections — intercept swipe at the snap position
     if (!isNearCurrentTop()) return;
 
-    if (delta > 0 && currentSection < sections.length - 1) {
+    if (deltaY > 0 && currentSection < sections.length - 1) {
+      e.preventDefault();
+      touchTriggered = true;
       playTransition(1); // swipe up → next section
-    } else if (delta < 0 && currentSection > 0) {
+    } else if (deltaY < 0 && currentSection > 0) {
+      e.preventDefault();
+      touchTriggered = true;
       playTransition(-1); // swipe down → previous section
     }
+  };
+
+  const onTouchEnd = () => {
+    touchActive = false;
+    touchTriggered = false;
   };
 
   // Keyboard scroll acts as a trigger in both directions
@@ -310,6 +356,7 @@
   collectSections();
   window.addEventListener('wheel', onWheel, { passive: false });
   window.addEventListener('touchstart', onTouchStart, { passive: true });
+  window.addEventListener('touchmove', onTouchMove, { passive: false });
   window.addEventListener('touchend', onTouchEnd, { passive: true });
   window.addEventListener('keydown', onKeyDown);
   window.addEventListener('scroll', onScrollTrack, { passive: true });

@@ -125,8 +125,10 @@
   --container-max: 1600px;  /* Max Width */
   --content-max: 1400px;    /* Content Width */
   --gutter: 40px;           /* Large Gutters */
+  --gutter-mobile: 20px;    /* Mobile Gutters */
   --section-pad-desktop: 180px; /* Section Padding Desktop */
   --section-pad-mobile: 90px;   /* Section Padding Mobile */
+  --section-pad-small: 60px;    /* Small Mobile Section Padding */
 
   /* Shape & Elevation */
   --radius-none: 0px;   /* Images, Cards */
