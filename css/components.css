@@ -150,7 +150,6 @@
   position: fixed;
   inset: 0;
   z-index: 99;
-  background-color: var(--color-black);
   align-items: center;
   justify-content: center;
   overflow: hidden;
@@ -158,6 +157,16 @@
 
 .nav__menu.is-open {
   display: flex;
+}
+
+/* Transparent black overlay — sits on top of the video */
+.nav__menu::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-color: rgba(17, 17, 17, 0.85);
+  pointer-events: none;
 }
 
 /* Nav menu video background — high quality, covers full screen */
@@ -174,7 +183,7 @@
 
 .nav__links {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
