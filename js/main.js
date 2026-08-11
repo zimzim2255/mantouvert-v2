@@ -87,7 +87,12 @@
   reveal.className = 'scroll-reveal';
   document.body.appendChild(reveal);
 
+  const revealOrange = document.createElement('div');
+  revealOrange.className = 'scroll-reveal scroll-reveal--orange';
+  document.body.appendChild(revealOrange);
+
   const TRANSITION_MS = 700; // matches --duration-slow
+  const HALF_TRANSITION_MS = 350; // each layer takes half the duration
 
   let sections = [];
   let currentSection = 0;
@@ -161,29 +166,46 @@
     isTransitioning = true;
     lockScroll();
 
-    // Phase 1: curtain slides down to cover the viewport
+    // Reset both curtains to hidden
     reveal.style.transition = 'none';
     reveal.style.transform = 'translateY(-100%)';
-    // Force reflow so the transition applies
+    revealOrange.style.transition = 'none';
+    revealOrange.style.transform = 'translateY(-100%)';
+    // Force reflow so the transitions apply
     void reveal.offsetHeight;
-    reveal.style.transition = `transform ${TRANSITION_MS}ms var(--ease)`;
+
+    // Phase 1a: black curtain falls down first (350ms)
+    reveal.style.transition = `transform ${HALF_TRANSITION_MS}ms var(--ease)`;
     reveal.style.transform = 'translateY(0%)';
 
-    // After covering, jump to target section and slide curtain away
+    // Phase 1b: orange curtain falls on top of the black one (350ms later)
+    setTimeout(() => {
+      revealOrange.style.transition = `transform ${HALF_TRANSITION_MS}ms var(--ease)`;
+      revealOrange.style.transform = 'translateY(0%)';
+    }, HALF_TRANSITION_MS);
+
+    // After both curtains cover the viewport, jump to target section
     setTimeout(() => {
       scrollToSection(next);
       currentSection = next;
 
-      // Phase 2: curtain slides away revealing the target section
-      reveal.style.transform = 'translateY(100%)';
+      // Phase 2a: orange curtain lifts away first (350ms)
+      revealOrange.style.transition = `transform ${HALF_TRANSITION_MS}ms var(--ease)`;
+      revealOrange.style.transform = 'translateY(-100%)';
 
+      // Phase 2b: black curtain lifts away revealing the target (350ms later)
       setTimeout(() => {
-        // Reset curtain for the next trigger
-        reveal.style.transition = 'none';
+        reveal.style.transition = `transform ${HALF_TRANSITION_MS}ms var(--ease)`;
         reveal.style.transform = 'translateY(-100%)';
-        unlockScroll();
-        isTransitioning = false;
-      }, TRANSITION_MS);
+
+        setTimeout(() => {
+          // Reset both curtains for the next trigger
+          reveal.style.transition = 'none';
+          revealOrange.style.transition = 'none';
+          unlockScroll();
+          isTransitioning = false;
+        }, HALF_TRANSITION_MS);
+      }, HALF_TRANSITION_MS);
     }, TRANSITION_MS);
   };
 
@@ -729,20 +751,40 @@
   document.querySelectorAll('.editorial-spread__explore').forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      // Play the curtain reveal transition when opening the gallery
+      // Play the dual curtain reveal transition when opening the gallery
       reveal.style.transition = 'none';
       reveal.style.transform = 'translateY(-100%)';
+      revealOrange.style.transition = 'none';
+      revealOrange.style.transform = 'translateY(-100%)';
       void reveal.offsetHeight;
-      reveal.style.transition = `transform ${TRANSITION_MS}ms var(--ease)`;
+
+      // Black curtain falls first
+      reveal.style.transition = `transform ${HALF_TRANSITION_MS}ms var(--ease)`;
       reveal.style.transform = 'translateY(0%)';
+
+      // Orange curtain falls on top
+      setTimeout(() => {
+        revealOrange.style.transition = `transform ${HALF_TRANSITION_MS}ms var(--ease)`;
+        revealOrange.style.transform = 'translateY(0%)';
+      }, HALF_TRANSITION_MS);
 
       setTimeout(() => {
         openInfiniteGallery();
-        reveal.style.transform = 'translateY(100%)';
+
+        // Orange curtain lifts first
+        revealOrange.style.transition = `transform ${HALF_TRANSITION_MS}ms var(--ease)`;
+        revealOrange.style.transform = 'translateY(-100%)';
+
+        // Black curtain lifts away
         setTimeout(() => {
-          reveal.style.transition = 'none';
+          reveal.style.transition = `transform ${HALF_TRANSITION_MS}ms var(--ease)`;
           reveal.style.transform = 'translateY(-100%)';
-        }, TRANSITION_MS);
+
+          setTimeout(() => {
+            reveal.style.transition = 'none';
+            revealOrange.style.transition = 'none';
+          }, HALF_TRANSITION_MS);
+        }, HALF_TRANSITION_MS);
       }, TRANSITION_MS);
     });
   });
