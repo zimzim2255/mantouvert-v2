@@ -76,7 +76,6 @@
 }
 
 .site-header.is-scrolled {
-  background-color: var(--color-black);
   padding-block: 16px;
 }
 
@@ -137,11 +136,21 @@
   text-transform: uppercase;
 }
 
-/* Scrolled state — text stays white */
-.site-header.is-scrolled .nav__logo,
-.site-header.is-scrolled .hamburger-line {
-  color: var(--color-white);
-  background-color: var(--color-white);
+/* On light backgrounds — icon and logo turn orange, black on hover */
+.site-header.is-on-light .nav__logo {
+  color: var(--color-orange);
+}
+
+.site-header.is-on-light .hamburger-line {
+  background-color: var(--color-orange);
+}
+
+.site-header.is-on-light .nav__toggle:hover .hamburger-line {
+  background-color: var(--color-black);
+}
+
+.site-header.is-on-light .nav__logo:hover {
+  color: var(--color-black);
 }
 
 /* Full-screen menu overlay */

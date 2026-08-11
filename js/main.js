@@ -21,8 +21,48 @@
       }
     };
 
+    // Detect whether the header sits over a light or dark background.
+    // Sample the element directly below the header center and toggle
+    // the `is-on-light` class so the icon/logo adapt their colors.
+    const updateHeaderContrast = () => {
+      if (!header) return;
+      const rect = header.getBoundingClientRect();
+      const x = window.innerWidth / 2;
+      const y = rect.bottom + 4; // just below the header
+      const el = document.elementFromPoint(x, y);
+      if (!el) return;
+
+      // Walk up to find a meaningful background color
+      let node = el;
+      let bg = null;
+      while (node && node !== document.body) {
+        const color = window.getComputedStyle(node).backgroundColor;
+        if (color && color !== 'rgba(0, 0, 0, 0)' && color !== 'transparent') {
+          bg = color;
+          break;
+        }
+        node = node.parentElement;
+      }
+
+      if (!bg) return;
+
+      // Parse the RGB values
+      const match = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+      if (!match) return;
+      const r = parseInt(match[1], 10);
+      const g = parseInt(match[2], 10);
+      const b = parseInt(match[3], 10);
+
+      // Compute luminance — if bright, use dark icon/logo
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      header.classList.toggle('is-on-light', luminance > 0.5);
+    };
+
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', updateHeaderContrast, { passive: true });
+    window.addEventListener('resize', updateHeaderContrast);
     onScroll();
+    updateHeaderContrast();
   }
 
   /* --------------------------------------------
@@ -585,14 +625,40 @@
 
         canvas.appendChild(card);
       }
+
+      // Canvas content metrics — used for centering and the full-overview zoom
+      const totalWidth = (COL_COUNT - 1) * (CARD_W + GAP) + CARD_W;
+      const totalHeight = Math.max(...colHeights);
+      contentCenterX = startX + totalWidth / 2;
+      contentCenterY = totalHeight / 2;
+      fitScale = Math.max(
+        MIN_SCALE,
+        Math.min(window.innerWidth / totalWidth, window.innerHeight / totalHeight)
+      );
+
+      // Small devices — open slightly zoomed out (~62%) so the photos
+      // appear smaller but are still readable. The user pinches to zoom.
+      if (window.innerWidth <= 768) {
+        scale = 0.62;
+        panX = window.innerWidth / 2 - contentCenterX * scale;
+        panY = window.innerHeight / 2 - contentCenterY * scale;
+        applyPan();
+      }
     });
 
     // --- Infinite drag pan with momentum (smooth rAF updates) ---
+    const MIN_SCALE = 0.08;
+    const MAX_SCALE = 4;
+
     let isDragging = false;
     let startXPos = 0;
     let startYPos = 0;
     let panX = 0;
     let panY = 0;
+    let scale = 1;
+    let contentCenterX = 0;
+    let contentCenterY = 0;
+    let fitScale = 1;
     let startPanX = 0;
     let startPanY = 0;
     let velocityX = 0;
@@ -606,7 +672,7 @@
     let mouseY = 0;
 
     const applyPan = () => {
-      canvas.style.transform = `translate(${panX}px, ${panY}px)`;
+      canvas.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
     };
 
     const stopInertia = () => {
@@ -618,6 +684,32 @@
         cancelAnimationFrame(dragRAF);
         dragRAF = null;
       }
+    };
+
+    // Zoom while keeping the point (cx, cy) on screen stationary.
+    // Defaults to the viewport center when no point is given.
+    const zoomAt = (factor, cx = window.innerWidth / 2, cy = window.innerHeight / 2) => {
+      const newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale * factor));
+      if (newScale === scale) return;
+      panX = cx - ((cx - panX) / scale) * newScale;
+      panY = cy - ((cy - panY) / scale) * newScale;
+      scale = newScale;
+      applyPan();
+    };
+
+    // Small devices — reset to the slightly zoomed-out overview.
+    // Larger screens — reset to the default 1:1 view.
+    const resetZoom = () => {
+      if (window.innerWidth <= 768) {
+        scale = 0.62;
+        panX = window.innerWidth / 2 - contentCenterX * scale;
+        panY = window.innerHeight / 2 - contentCenterY * scale;
+      } else {
+        scale = 1;
+        panX = 0;
+        panY = 0;
+      }
+      applyPan();
     };
 
     // Smooth drag loop — reads latest mouse pos each rAF
@@ -707,23 +799,127 @@
       endDrag();
     });
 
-    // Touch events
+    // Touch events — single finger drags, two fingers pinch-to-zoom,
+    // double-tap zooms in, double-tap at max zoom resets the view.
+    // Every handler also stops propagation so the page-level scroll
+    // transition handlers never fire while the gallery is open.
     let touchId = null;
+    let activeTouches = new Map();
+    let pinchStartDistance = 0;
+    let pinchStartMidX = 0;
+    let pinchStartMidY = 0;
+    let pinchStartPanX = 0;
+    let pinchStartPanY = 0;
+    let pinchStartScale = 1;
+    let lastTapAt = 0;
+    let lastTapX = 0;
+    let lastTapY = 0;
+
     gallery.addEventListener('touchstart', (e) => {
+      e.stopPropagation();
       if (e.target.closest('.gallery-overlay__close')) return;
-      const t = e.touches[0];
-      touchId = t.identifier;
-      startDrag(t.clientX, t.clientY);
+      for (const t of e.changedTouches) {
+        activeTouches.set(t.identifier, { x: t.clientX, y: t.clientY });
+      }
+      if (activeTouches.size === 2) {
+        // Enter pinch mode — cancel any single-finger drag / inertia
+        stopInertia();
+        isDragging = false;
+        gallery.classList.remove('is-dragging');
+        if (dragRAF) {
+          cancelAnimationFrame(dragRAF);
+          dragRAF = null;
+        }
+        const [a, b] = [...activeTouches.values()];
+        pinchStartDistance = Math.hypot(a.x - b.x, a.y - b.y);
+        pinchStartMidX = (a.x + b.x) / 2;
+        pinchStartMidY = (a.y + b.y) / 2;
+        pinchStartPanX = panX;
+        pinchStartPanY = panY;
+        pinchStartScale = scale;
+      } else if (activeTouches.size === 1) {
+        const t = e.changedTouches[0];
+        touchId = t.identifier;
+        startDrag(t.clientX, t.clientY);
+      }
     }, { passive: true });
 
     gallery.addEventListener('touchmove', (e) => {
-      const t = Array.from(e.touches).find((t) => t.identifier === touchId);
-      if (t) moveDrag(t.clientX, t.clientY);
-    }, { passive: true });
+      e.stopPropagation();
+      for (const t of e.changedTouches) {
+        if (activeTouches.has(t.identifier)) {
+          activeTouches.set(t.identifier, { x: t.clientX, y: t.clientY });
+        }
+      }
 
-    gallery.addEventListener('touchend', () => {
-      endDrag();
-    }, { passive: true });
+      if (activeTouches.size === 2) {
+        e.preventDefault();
+        const [a, b] = [...activeTouches.values()];
+        const dist = Math.hypot(a.x - b.x, a.y - b.y);
+        const midX = (a.x + b.x) / 2;
+        const midY = (a.y + b.y) / 2;
+        if (pinchStartDistance > 0 && dist > 0) {
+          const newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, pinchStartScale * (dist / pinchStartDistance)));
+          // Keep the world point under the initial midpoint under the current midpoint
+          panX = midX - ((pinchStartMidX - pinchStartPanX) / pinchStartScale) * newScale;
+          panY = midY - ((pinchStartMidY - pinchStartPanY) / pinchStartScale) * newScale;
+          scale = newScale;
+          applyPan();
+        }
+      } else if (activeTouches.size === 1) {
+        const t = e.changedTouches[0];
+        if (t.identifier === touchId) moveDrag(t.clientX, t.clientY);
+      }
+    }, { passive: false });
+
+    const onTouchEnd = (e) => {
+      e.stopPropagation();
+      for (const t of e.changedTouches) {
+        activeTouches.delete(t.identifier);
+      }
+
+      // Double-tap detection (single finger)
+      if (activeTouches.size === 0 && e.changedTouches.length === 1) {
+        const t = e.changedTouches[0];
+        const now = performance.now();
+        if (
+          now - lastTapAt < 300 &&
+          Math.abs(t.clientX - lastTapX) < 30 &&
+          Math.abs(t.clientY - lastTapY) < 30
+        ) {
+          if (scale < MAX_SCALE) {
+            zoomAt(2, t.clientX, t.clientY);
+          } else {
+            resetZoom();
+          }
+          lastTapAt = 0;
+        } else {
+          lastTapAt = now;
+        }
+        lastTapX = t.clientX;
+        lastTapY = t.clientY;
+      }
+
+      if (activeTouches.size === 1) {
+        // One finger still down after a pinch — resume dragging with it
+        const [id, point] = [...activeTouches.entries()][0];
+        touchId = id;
+        startDrag(point.x, point.y);
+      } else if (activeTouches.size === 0) {
+        endDrag();
+      }
+    };
+
+    gallery.addEventListener('touchend', onTouchEnd, { passive: true });
+    gallery.addEventListener('touchcancel', onTouchEnd, { passive: true });
+
+    // Mouse wheel zoom (also stops the page-level scroll transition handlers)
+    overlay.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+      zoomAt(factor, e.clientX, e.clientY);
+    }, { passive: false });
 
     // Trigger the expanding animation
     requestAnimationFrame(() => {
