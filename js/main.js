@@ -460,13 +460,15 @@
           </div>
           <div class="mega-footer__overlay"></div>
 
-          <!-- Top row — logo + contact info -->
+          <!-- Top row — logo -->
           <div class="mega-footer__top">
             <a href="index.html" class="mega-footer__logo">Mantouvert</a>
-            <div class="mega-footer__contact">
-              <a href="mailto:hello@mantouvert.com">hello@mantouvert.com</a>
-              <a href="tel:+212000000000">+212 000 000 000</a>
-            </div>
+          </div>
+
+          <!-- Contact — desktop top-right, mobile bottom-right on the title line -->
+          <div class="mega-footer__contact">
+            <a href="mailto:hello@mantouvert.com">hello@mantouvert.com</a>
+            <a href="tel:+212000000000">+212 000 000 000</a>
           </div>
 
           <!-- Center — brand statement -->
@@ -497,6 +499,11 @@
       </div>
     `;
 
+    // Brown spacer band between the last section and the footer
+    const spacer = document.createElement('div');
+    spacer.className = 'mega-footer__spacer';
+
+    document.body.appendChild(spacer);
     document.body.appendChild(footer);
   };
 
@@ -510,29 +517,31 @@
      grab and pan in any direction. Drag with
      momentum/inertia, like moving a map.
      -------------------------------------------- */
+  // Pool Collection — each image gets a title + short description
   const galleryImages = [
-    'public/imgs/hero_garden.jpg',
-    'public/imgs/hero_swimmingpool.jpg',
-    'public/imgs/hero_waterfall.jpg',
-    'https://images.unsplash.com/photo-1755331039789-7e5680e26e8f?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1755569309049-98410b94f66d?q=80&w=772&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1755497595318-7e5e3523854f?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1755353985163-c2a0fe5ac3d8?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1745965976680-d00be7dc0377?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1752588975228-21f44630bb3c?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://pbs.twimg.com/media/Gyla7NnXMAAXSo_?format=jpg&name=large'
-  ];
-
-  // Card color themes + heading/body text
-  const cardThemes = [
-    { cls: 'infinite-gallery__card--white', title: 'WANDER', sub: 'Outdoor Living' },
-    { cls: 'infinite-gallery__card--dark', title: '$1M', sub: 'Villa Ambre' },
-    { cls: 'infinite-gallery__card--brown', title: 'TERRA', sub: 'Garden Retreat' },
-    { cls: 'infinite-gallery__card--beige', title: 'BRIGHT SMILES', sub: 'Poolside' },
-    { cls: 'infinite-gallery__card--white', title: 'ATHERTON', sub: 'Pavilions' },
-    { cls: 'infinite-gallery__card--dark', title: 'AZURE', sub: 'Reflections' },
-    { cls: 'infinite-gallery__card--brown', title: 'STONE', sub: 'Craftsmanship' },
-    { cls: 'infinite-gallery__card--beige', title: 'CASCADE', sub: 'Water Features' }
+    { src: 'https://i.pinimg.com/736x/30/25/81/3025814fa9ff32f420b109d538bca80a.jpg', title: 'Azure Horizon', desc: 'Infinity pool merging with the sky' },
+    { src: 'https://i.pinimg.com/736x/e1/af/f5/e1aff5a4f4b72a15be57f42aa6df80f7.jpg', title: 'Crystal Reflections', desc: 'Still water catching the light' },
+    { src: 'https://i.pinimg.com/736x/b3/7e/5e/b37e5e8dec803717d07de5dec0143399.jpg', title: 'Emerald Oasis', desc: 'Lush poolside retreat' },
+    { src: 'https://i.pinimg.com/736x/5f/0f/87/5f0f877fd4f9358786296b75bb558996.jpg', title: 'Serene Waters', desc: 'Calm pool in golden light' },
+    { src: 'https://i.pinimg.com/736x/33/db/d2/33dbd2cf7e32701ce020110c4b249c2a.jpg', title: 'Villa Azure', desc: 'Private pool escape' },
+    { src: 'https://i.pinimg.com/736x/dd/69/b8/dd69b87cf4527fb242ccbb0ced643515.jpg', title: 'Midnight Dip', desc: 'Pool under twilight glow' },
+    { src: 'https://i.pinimg.com/736x/69/1c/11/691c11e58fc3c0a715292e1d0b6991ba.jpg', title: 'Paradise Edge', desc: 'Seamless vanishing edge' },
+    { src: 'https://i.pinimg.com/736x/2c/5a/37/2c5a3701bab075b7574b3d1eab83a738.jpg', title: 'Tropical Calm', desc: 'Pool framed by palms' },
+    { src: 'https://i.pinimg.com/736x/00/ef/bf/00efbf5300c5280b40e58f64d13119d0.jpg', title: 'Liquid Light', desc: 'Sun-dappled water' },
+    { src: 'https://i.pinimg.com/736x/01/5b/50/015b507e7c0322705465ff3c96d9a011.jpg', title: 'Grand Cascade', desc: 'Pool with waterfall feature' },
+    { src: 'https://i.pinimg.com/736x/f5/a4/65/f5a465a49225637b0d28cea98f97b74d.jpg', title: 'Poolside Luxury', desc: 'Resort-style water' },
+    { src: 'https://i.pinimg.com/736x/85/95/22/859522b283fdad20b67b7fbe2aecf0dd.jpg', title: 'Morning Stillness', desc: 'Quiet pool at dawn' },
+    { src: 'https://i.pinimg.com/736x/9f/f5/5b/9ff55b997d6a796d9e16e67ba9aadc92.jpg', title: 'Blue Lagoon', desc: 'Deep turquoise water' },
+    { src: 'https://i.pinimg.com/736x/e5/b9/2d/e5b92da9afd7a15a6a775322070078bb.jpg', title: 'Summer Retreat', desc: 'Pool in bright daylight' },
+    { src: 'https://i.pinimg.com/736x/65/e0/3d/65e03dfbc01e452c7248027237d1124d.jpg', title: 'Private Sanctuary', desc: 'Secluded swimming pool' },
+    { src: 'https://i.pinimg.com/736x/95/90/78/959078063be22afa241123643ae8ec11.jpg', title: 'Desert Oasis', desc: 'Pool in warm tones' },
+    { src: 'https://i.pinimg.com/736x/a1/12/8e/a1128e8c9c41d46071ee9b9bdcd0b212.jpg', title: 'Glassy Surface', desc: 'Mirror-like pool water' },
+    { src: 'https://i.pinimg.com/736x/d2/1e/9b/d21e9ba2856d3e5752e0714e83458e7c.jpg', title: 'Evening Glow', desc: 'Pool at sunset' },
+    { src: 'https://i.pinimg.com/736x/4a/c8/f3/4ac8f34725c4a4bf02d7929e118dfa78.jpg', title: 'Stone & Water', desc: 'Pool with natural stone' },
+    { src: 'https://i.pinimg.com/736x/3e/d4/8d/3ed48da28904163f72869a568292b090.jpg', title: 'Endless Blue', desc: 'Long infinity pool' },
+    { src: 'https://i.pinimg.com/736x/63/db/91/63db918177bf4e43e3fce74fb214184a.jpg', title: 'Hidden Gem', desc: 'Intimate garden pool' },
+    { src: 'https://i.pinimg.com/736x/b9/8f/6e/b98f6e27997ceb0eba16fb006e849a44.jpg', title: 'Coastal Breeze', desc: 'Pool with ocean vibes' },
+    { src: 'https://i.pinimg.com/736x/c5/fd/d0/c5fdd0834eb2a4e9b069b48d170660e8.jpg', title: 'The Centerpiece', desc: 'Signature pool design' }
   ];
 
   const openInfiniteGallery = () => {
@@ -558,18 +567,18 @@
 
     // Preload images to get their natural aspect ratios
     const imageRatios = [];
-    const preloadPromises = galleryImages.map((src) => {
+    const preloadPromises = galleryImages.map((item) => {
       return new Promise((resolve) => {
         const img = new Image();
         img.onload = () => {
-          imageRatios.push({ src, ratio: img.naturalWidth / img.naturalHeight });
+          imageRatios.push({ src: item.src, ratio: img.naturalWidth / img.naturalHeight });
           resolve();
         };
         img.onerror = () => {
-          imageRatios.push({ src, ratio: 1.5 }); // fallback 3:2
+          imageRatios.push({ src: item.src, ratio: 1.5 }); // fallback 3:2
           resolve();
         };
-        img.src = src;
+        img.src = item.src;
       });
     });
 
@@ -586,7 +595,7 @@
 
       for (let i = 0; i < COL_COUNT * 8; i++) {
         const idx = i % galleryImages.length;
-        const theme = cardThemes[i % cardThemes.length];
+        const item = galleryImages[idx];
         const ratio = imageRatios[idx] ? imageRatios[idx].ratio : 1.5;
 
         // Pick the shortest column to place the next card
@@ -600,7 +609,7 @@
         const h = Math.round(CARD_W / ratio);
 
         const card = document.createElement('div');
-        card.className = `infinite-gallery__card ${theme.cls}`;
+        card.className = 'infinite-gallery__card';
         card.style.left = `${startX + col * (CARD_W + GAP)}px`;
         card.style.top = `${colHeights[col]}px`;
         card.style.width = `${w}px`;
@@ -609,19 +618,31 @@
         // Advance this column's height by card height + gap
         colHeights[col] += h + GAP;
 
-        // Image fills the card; text overlay for some cards
+        // Image fills the card
         const img = document.createElement('img');
-        img.src = galleryImages[idx];
-        img.alt = theme.title;
+        img.src = item.src;
+        img.alt = item.title;
         card.appendChild(img);
 
-        // Add text overlay for every 3rd card
-        if (i % 3 === 0) {
-          const text = document.createElement('div');
-          text.className = 'infinite-gallery__card-text';
-          text.innerHTML = `<h4>${theme.title}</h4><p>${theme.sub}</p>`;
-          card.appendChild(text);
-        }
+        // Banner overlay — title + short description on every card
+        const banner = document.createElement('div');
+        banner.className = 'infinite-gallery__banner';
+        banner.innerHTML = `<h4>${item.title}</h4><p>${item.desc}</p>`;
+        card.appendChild(banner);
+
+        // Clicking a photo zooms to it
+        card.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const cardRect = card.getBoundingClientRect();
+          const cardCenterX = cardRect.left + cardRect.width / 2;
+          const cardCenterY = cardRect.top + cardRect.height / 2;
+          // Zoom to ~1.5x and center the clicked card
+          const targetScale = 1.5;
+          panX = cardCenterX - ((cardCenterX - panX) / scale) * targetScale;
+          panY = cardCenterY - ((cardCenterY - panY) / scale) * targetScale;
+          scale = targetScale;
+          applyPan();
+        });
 
         canvas.appendChild(card);
       }
