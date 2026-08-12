@@ -572,10 +572,34 @@
     { src: 'https://i.pinimg.com/736x/e0/e0/a5/e0e0a5036a1299f4a5a5ca6bb7a58bbd.jpg', title: 'Misty Morning', desc: 'Soft light on the garden' }
   ];
 
-  // Combined gallery — pools first, then gardens
+  // Fountains collection
+  const fountainImages = [
+    { src: 'https://i.pinimg.com/736x/42/bb/80/42bb800413333ade4cb3abb856b7ea7a.jpg', title: 'Cascade Flow', desc: 'Waterfall feature in motion' },
+    { src: 'https://i.pinimg.com/736x/ec/3c/95/ec3c95deb157534d666ead85b40bb439.jpg', title: 'Stone Falls', desc: 'Natural stone waterfall' },
+    { src: 'https://i.pinimg.com/736x/36/b4/a3/36b4a3e99de92c3c5a193999a5b710ec.jpg', title: 'Garden Fountain', desc: 'Classic water feature' },
+    { src: 'https://i.pinimg.com/736x/b9/2b/9c/b92b9c0730d77f066b8d8c361d7ab53e.jpg', title: 'Terraced Water', desc: 'Layered cascading water' },
+    { src: 'https://i.pinimg.com/736x/90/31/ac/9031ac070f2e370686029f0bb0ac215d.jpg', title: 'Mist & Stone', desc: 'Waterfall with soft mist' },
+    { src: 'https://i.pinimg.com/736x/ba/37/26/ba37263b8316fe21f67a2701d07f02e6.jpg', title: 'Quiet Stream', desc: 'Gentle flowing water' },
+    { src: 'https://i.pinimg.com/736x/f2/86/c7/f286c76cac8d8da3af26e5a88ec45395.jpg', title: 'Rock Cascade', desc: 'Water over natural rock' },
+    { src: 'https://i.pinimg.com/736x/55/0d/d5/550dd51a4f6d547ce74c4cc06febc757.jpg', title: 'Evening Falls', desc: 'Waterfall at dusk' },
+    { src: 'https://i.pinimg.com/736x/8f/5e/59/8f5e592b33435265d86dfd1d04e01d00.jpg', title: 'Pool Waterfall', desc: 'Water feature into pool' },
+    { src: 'https://i.pinimg.com/736x/de/f2/f1/def2f1add3e49c80d68651ae1ed44aae.jpg', title: 'Garden Stream', desc: 'Winding water path' },
+    { src: 'https://i.pinimg.com/736x/41/ee/ca/41eeca49e35992051996176b439bcb6d.jpg', title: 'Fountain Court', desc: 'Elegant courtyard fountain' },
+    { src: 'https://i.pinimg.com/736x/e4/a3/1a/e4a31a1bc94e73a7a9e9d50c38ffe3df.jpg', title: 'Water Wall', desc: 'Modern vertical water feature' },
+    { src: 'https://i.pinimg.com/736x/0a/cb/8a/0acb8a7ef2ee92c47ad9f0881c77ba01.jpg', title: 'Natural Spring', desc: 'Organic water feature' },
+    { src: 'https://i.pinimg.com/736x/0b/15/3a/0b153a9b625271813fc24a215af97030.jpg', title: 'Cascading Steps', desc: 'Stepped water flow' },
+    { src: 'https://i.pinimg.com/736x/20/8a/c7/208ac745618aa574fae28e16c14cf5ea.jpg', title: 'Hidden Falls', desc: 'Secluded waterfall' },
+    { src: 'https://i.pinimg.com/736x/43/13/27/4313272c1731f50d21c721ea16912e4a.jpg', title: 'Stone Basin', desc: 'Fountain with stone basin' },
+    { src: 'https://i.pinimg.com/736x/a1/ca/bd/a1cabdeef194c70a871627ffce706d24.jpg', title: 'Tropical Falls', desc: 'Lush waterfall setting' },
+    { src: 'https://i.pinimg.com/736x/e4/6b/e5/e46be5f23b5851b9ee79ba94a31bd0f4.jpg', title: 'Garden Cascade', desc: 'Tiered garden water feature' },
+    { src: 'https://i.pinimg.com/736x/97/d9/f4/97d9f4ec800c8a21ab8bc43315675ef1.jpg', title: 'Mountain Stream', desc: 'Rushing water feature' }
+  ];
+
+  // Combined gallery — pools, gardens, then fountains
   const galleryImages = [
     ...poolImages.map((item) => ({ ...item, collection: 'Pools' })),
-    ...gardenImages.map((item) => ({ ...item, collection: 'Gardens' }))
+    ...gardenImages.map((item) => ({ ...item, collection: 'Gardens' })),
+    ...fountainImages.map((item) => ({ ...item, collection: 'Fountains' }))
   ];
 
   const openInfiniteGallery = (initialCollection) => {
