@@ -69,6 +69,23 @@
      Hamburger menu toggle — opens/closes the
      full-screen overlay menu.
      -------------------------------------------- */
+  /* --------------------------------------------
+     Reveal-on-scroll — slides text in from the
+     left/right as it enters the viewport.
+     -------------------------------------------- */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach((el) => {
+    revealObserver.observe(el);
+  });
+
   const toggle = document.querySelector('.nav__toggle');
   const menu = document.querySelector('.nav__menu');
 
