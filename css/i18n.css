@@ -3,6 +3,15 @@
    Language switcher + RTL (Arabic) support
    ============================================================ */
 
+/* Prevent horizontal overflow globally — the slide-in reveal
+   animations and splash letters translate elements off-screen,
+   which can create unwanted horizontal scrollbars. */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 /* --------------------------------------------
    Language Switcher — fixed top-right of header
    -------------------------------------------- */
