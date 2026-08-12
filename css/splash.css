@@ -1,0 +1,83 @@
+/* ============================================================
+   MANTOUVERT — SPLASH SCREEN (PRELOADER)
+   Orange background + black "Mantouvert" letters → letters
+   reveal one by one → background flips to black + letters turn
+   orange → the whole splash slides up smoothly to reveal content.
+   ============================================================ */
+
+/* Lock scrolling while the splash plays */
+body.is-splashed {
+  overflow: hidden;
+}
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-orange); /* #C95F24 — starts orange */
+  transition:
+    background-color 0.7s var(--ease),
+    transform 0.7s var(--ease);
+}
+
+/* After all letters are shown — background flips to black */
+.splash.is-dark {
+  background-color: var(--color-black); /* #111111 */
+}
+
+/* Exit — whole splash slides up out of view */
+.splash.is-exiting {
+  transform: translateY(-100%);
+}
+
+/* Letter row */
+.splash__word {
+  display: flex;
+  gap: clamp(2px, 1vw, 10px);
+  padding: 0 24px;
+  flex-wrap: nowrap;
+}
+
+/* Each letter starts hidden, slides up into place */
+.splash__letter {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: clamp(44px, 9vw, 130px);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-black); /* black letters on orange bg */
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.35s var(--ease),
+    transform 0.35s var(--ease),
+    color 0.7s var(--ease);
+}
+
+/* On dark bg — letters turn orange (the brand logo look) */
+.splash.is-dark .splash__letter {
+  color: var(--color-orange);
+}
+
+.splash__letter.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Respect reduced-motion preferences — skip letter animation */
+@media (prefers-reduced-motion: reduce) {
+  .splash__letter {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .splash,
+  .splash.is-dark,
+  .splash.is-exiting {
+    transition: none;
+  }
+}
