@@ -517,8 +517,13 @@
      grab and pan in any direction. Drag with
      momentum/inertia, like moving a map.
      -------------------------------------------- */
-  // Pool Collection — each image gets a title + short description
-  const galleryImages = [
+  /* --------------------------------------------
+     Gallery Collections — Pools, Gardens, ...
+     Each image gets a title + short description.
+     -------------------------------------------- */
+
+  // Pools collection
+  const poolImages = [
     { src: 'https://i.pinimg.com/736x/30/25/81/3025814fa9ff32f420b109d538bca80a.jpg', title: 'Azure Horizon', desc: 'Infinity pool merging with the sky' },
     { src: 'https://i.pinimg.com/736x/e1/af/f5/e1aff5a4f4b72a15be57f42aa6df80f7.jpg', title: 'Crystal Reflections', desc: 'Still water catching the light' },
     { src: 'https://i.pinimg.com/736x/b3/7e/5e/b37e5e8dec803717d07de5dec0143399.jpg', title: 'Emerald Oasis', desc: 'Lush poolside retreat' },
@@ -544,7 +549,36 @@
     { src: 'https://i.pinimg.com/736x/c5/fd/d0/c5fdd0834eb2a4e9b069b48d170660e8.jpg', title: 'The Centerpiece', desc: 'Signature pool design' }
   ];
 
-  const openInfiniteGallery = () => {
+  // Gardens collection
+  const gardenImages = [
+    { src: 'https://i.pinimg.com/736x/8f/70/09/8f7009bb7ea778076ada66ab0d244c3f.jpg', title: 'Botanical Haven', desc: 'Lush layered garden beds' },
+    { src: 'https://i.pinimg.com/1200x/1c/92/64/1c9264e1e16f142015412a8730ed179c.jpg', title: 'Green Cathedral', desc: 'Tall trees framing the path' },
+    { src: 'https://i.pinimg.com/736x/d6/cb/77/d6cb775392d22ec8a8384c79c54140bc.jpg', title: 'Stone & Bloom', desc: 'Formal garden with stonework' },
+    { src: 'https://i.pinimg.com/736x/93/10/bd/9310bd9a8148d3ed5937c2e6ccf78067.jpg', title: 'Moonlit Garden', desc: 'Evening light among the plants' },
+    { src: 'https://i.pinimg.com/736x/c7/aa/82/c7aa82f6e8171f0387a9b0f4783ef1f8.jpg', title: 'Fern Walk', desc: 'Shaded path through greenery' },
+    { src: 'https://i.pinimg.com/736x/03/64/19/036419694f7cde0b63caf5b6d75d2dfa.jpg', title: 'Secret Courtyard', desc: 'Intimate planted garden' },
+    { src: 'https://i.pinimg.com/736x/a1/32/41/a132419d6feab9d556c98eb4518fe200.jpg', title: 'Terraced Flora', desc: 'Elevated garden beds' },
+    { src: 'https://i.pinimg.com/736x/9b/11/57/9b1157feb67ab8500928f36943935b7c.jpg', title: 'Jungle Retreat', desc: 'Dense tropical planting' },
+    { src: 'https://i.pinimg.com/736x/4f/c2/2e/4fc22e38b9d71c932e54d29ce507dec2.jpg', title: 'Golden Hour', desc: 'Warm sunlight on foliage' },
+    { src: 'https://i.pinimg.com/736x/8b/5a/8f/8b5a8fa5aaab7b82c5667a8dd7ac3287.jpg', title: 'Modern Oasis', desc: 'Contemporary garden design' },
+    { src: 'https://i.pinimg.com/736x/82/61/c0/8261c0186271eacb74bf6881bef1e291.jpg', title: 'Tree Canopy', desc: 'Verdant overhead cover' },
+    { src: 'https://i.pinimg.com/736x/63/99/be/6399be5e3d431d61544c9891589b7cbb.jpg', title: 'Water Garden', desc: 'Reflective pool among plants' },
+    { src: 'https://i.pinimg.com/736x/9f/a2/68/9fa26817df16fe9554cb334a06dd9d4b.jpg', title: 'Olive Grove', desc: 'Mediterranean planting style' },
+    { src: 'https://i.pinimg.com/736x/2e/9f/a3/2e9fa3327090726120da61804974455f.jpg', title: 'Secluded Path', desc: 'Winding garden walkway' },
+    { src: 'https://i.pinimg.com/736x/80/cf/a6/80cfa6ee635c0c1711ab8bf443171148.jpg', title: 'Evergreen Frame', desc: 'Structured evergreen borders' },
+    { src: 'https://i.pinimg.com/736x/c9/3c/c9/c93cc91d3c8631685a5d30c48e78a1d6.jpg', title: 'Garden Room', desc: 'Outdoor living with planting' },
+    { src: 'https://i.pinimg.com/736x/c8/c4/78/c8c478dbc4c7fe37e80d334f5a3f24f9.jpg', title: 'Sunlit Meadow', desc: 'Open planting in daylight' },
+    { src: 'https://i.pinimg.com/736x/a7/66/0a/a7660af82cc15a3ba757c93b9b99abce.jpg', title: 'Archway Garden', desc: 'Climbing plants over stone' },
+    { src: 'https://i.pinimg.com/736x/e0/e0/a5/e0e0a5036a1299f4a5a5ca6bb7a58bbd.jpg', title: 'Misty Morning', desc: 'Soft light on the garden' }
+  ];
+
+  // Combined gallery — pools first, then gardens
+  const galleryImages = [
+    ...poolImages.map((item) => ({ ...item, collection: 'Pools' })),
+    ...gardenImages.map((item) => ({ ...item, collection: 'Gardens' }))
+  ];
+
+  const openInfiniteGallery = (initialCollection) => {
     // Remove any existing overlay
     const existing = document.querySelector('.gallery-overlay');
     if (existing) existing.remove();
@@ -565,9 +599,17 @@
     const gallery = overlay.querySelector('.infinite-gallery');
     const canvas = overlay.querySelector('.infinite-gallery__canvas');
 
-    // Preload images to get their natural aspect ratios
+    // Track which collection is currently displayed (default: Pools).
+    // If the requested collection has no images yet, fall back to all images.
+    let activeCollection = initialCollection || 'Pools';
+    let filteredImages = galleryImages.filter((item) => item.collection === activeCollection);
+    if (filteredImages.length === 0) {
+      filteredImages = galleryImages;
+    }
+
+    // Preload the filtered collection images to get their natural aspect ratios
     const imageRatios = [];
-    const preloadPromises = galleryImages.map((item) => {
+    const preloadPromises = filteredImages.map((item) => {
       return new Promise((resolve) => {
         const img = new Image();
         img.onload = () => {
@@ -594,8 +636,8 @@
       const colHeights = new Array(COL_COUNT).fill(0);
 
       for (let i = 0; i < COL_COUNT * 8; i++) {
-        const idx = i % galleryImages.length;
-        const item = galleryImages[idx];
+        const idx = i % filteredImages.length;
+        const item = filteredImages[idx];
         const ratio = imageRatios[idx] ? imageRatios[idx].ratio : 1.5;
 
         // Pick the shortest column to place the next card
@@ -624,10 +666,14 @@
         img.alt = item.title;
         card.appendChild(img);
 
-        // Banner overlay — title + short description on every card
+        // Banner overlay — collection tag + title + short description
         const banner = document.createElement('div');
         banner.className = 'infinite-gallery__banner';
-        banner.innerHTML = `<h4>${item.title}</h4><p>${item.desc}</p>`;
+        banner.innerHTML = `
+          <span class="infinite-gallery__collection">${item.collection}</span>
+          <h4>${item.title}</h4>
+          <p>${item.desc}</p>
+        `;
         card.appendChild(banner);
 
         // Clicking a photo zooms to it
@@ -964,10 +1010,22 @@
     document.addEventListener('keydown', onKey);
   };
 
-  // Wire up all "Explore all projects" links
+  // Wire up all "Explore all projects" links.
+  // Each editorial spread opens its own collection:
+  //   gallery-atherton (green) → Gardens
+  //   gallery-azure    (blue)  → Pools
+  //   gallery-terra    (brown) → Fountains
+  const collectionByGallery = {
+    'gallery-atherton': 'Gardens',
+    'gallery-azure': 'Pools',
+    'gallery-terra': 'Fountains'
+  };
+
   document.querySelectorAll('.editorial-spread__explore').forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
+      const galleryId = link.dataset.gallery;
+      const collection = collectionByGallery[galleryId] || 'Pools';
       // Play the dual curtain reveal transition when opening the gallery
       reveal.style.transition = 'none';
       reveal.style.transform = 'translateY(-100%)';
@@ -986,7 +1044,7 @@
       }, HALF_TRANSITION_MS);
 
       setTimeout(() => {
-        openInfiniteGallery();
+        openInfiniteGallery(collection);
 
         // Orange curtain lifts first
         revealOrange.style.transition = `transform ${HALF_TRANSITION_MS}ms var(--ease)`;
