@@ -1056,6 +1056,72 @@
     'gallery-terra': 'Fountains'
   };
 
+  /* --------------------------------------------
+     Contact Form — Formspree AJAX submission.
+     Sends the data via fetch and shows an inline
+     confirmation instead of redirecting away.
+     -------------------------------------------- */
+  const contactForm = document.querySelector('.contact-form');
+
+  if (contactForm) {
+    const statusEl = document.querySelector('.contact-form__status');
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+
+    const getStatusText = (isSuccess) => {
+      const key = isSuccess
+        ? 'Thank you! We will get back to you within 24 hours.'
+        : 'Something went wrong. Please try again or email us directly.';
+      return window.MantouvertI18n ? window.MantouvertI18n.t(key) : key;
+    };
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!statusEl) return;
+
+      const btn = contactForm.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = '...';
+
+      const data = new FormData(contactForm);
+
+      fetch(contactForm.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      })
+        .then((res) => {
+          if (res.ok) {
+            statusEl.classList.remove('is-error');
+            statusEl.classList.add('is-success');
+            statusEl.textContent = getStatusText(true);
+            contactForm.reset();
+          } else {
+            throw new Error('Formspree submission failed');
+          }
+        })
+        .catch(() => {
+          statusEl.classList.remove('is-success');
+          statusEl.classList.add('is-error');
+          statusEl.textContent = getStatusText(false);
+        })
+        .finally(() => {
+          statusEl.hidden = false;
+          btn.disabled = false;
+          btn.textContent = window.MantouvertI18n
+            ? window.MantouvertI18n.t('SEND REQUEST')
+            : originalText;
+        });
+    });
+
+    // Re-translate an already-visible status message on language change
+    document.addEventListener('i18n:change', () => {
+      if (statusEl && !statusEl.hidden) {
+        statusEl.textContent = getStatusText(statusEl.classList.contains('is-success'));
+      }
+    });
+  }
+
   document.querySelectorAll('.editorial-spread__explore').forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
