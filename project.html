@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/i18n.css">
 </head>
 <body>
 
@@ -26,11 +27,11 @@
         <source src="https://res.cloudinary.com/dqlr9mio4/video/upload/v1786396921/From_Klickpin.com-_1057431187524340407-pin-id-1057431187524340407_l3fhx6.mp4" type="video/mp4">
       </video>
       <ul class="nav__links">
-        <li><a href="index.html" class="nav__link">Home</a></li>
-        <li><a href="projects.html" class="nav__link is-active">Projects</a></li>
-        <li><a href="services.html" class="nav__link">Services</a></li>
-        <li><a href="about.html" class="nav__link">About</a></li>
-        <li><a href="contact.html" class="nav__link nav__link--cta">Request a Quote</a></li>
+        <li><a href="index.html" class="nav__link" data-i18n="Home">Home</a></li>
+        <li><a href="projects.html" class="nav__link is-active" data-i18n="Projects">Projects</a></li>
+        <li><a href="services.html" class="nav__link" data-i18n="Services">Services</a></li>
+        <li><a href="about.html" class="nav__link" data-i18n="About">About</a></li>
+        <li><a href="contact.html" class="nav__link nav__link--cta" data-i18n="Request a Quote">Request a Quote</a></li>
       </ul>
     </div>
   </header>
@@ -43,10 +44,7 @@
         <img src="public/imgs/hero_garden.jpg" alt="Project name">
       </div>
       <div class="hero__content container">
-        <h1 class="hero__title">
-          VILLA<br>
-          AMBRE
-        </h1>
+        <h1 class="hero__title" data-i18n="VILLA<br>AMBRE">VILLA<br>AMBRE</h1>
         <p class="hero__intro">Casa Blanca · 2024</p>
       </div>
     </section>
@@ -54,10 +52,8 @@
     <!-- PROJECT INTRO — editorial overview -->
     <section class="intro">
       <div class="container">
-        <p class="intro__eyebrow">— 01 — Overview</p>
-        <h2 class="intro__title">
-          A private villa with an infinity pool, cascading water features and a curated garden.
-        </h2>
+        <p class="intro__eyebrow" data-i18n="— 01 — Overview">— 01 — Overview</p>
+        <h2 class="intro__title" data-i18n="A private villa with an infinity pool, cascading water features and a curated garden.">A private villa with an infinity pool, cascading water features and a curated garden.</h2>
       </div>
     </section>
 
@@ -71,20 +67,17 @@
           </div>
 
           <div class="craftsmanship__content">
-            <h3 class="craftsmanship__title">The Brief</h3>
-            <p class="craftsmanship__text">
-              Body copy describing the project scope, design approach and materials used.
-              Editorial tone with generous spacing.
-            </p>
+            <h3 class="craftsmanship__title" data-i18n="The Brief">The Brief</h3>
+            <p class="craftsmanship__text" data-i18n="Body copy describing the project scope, design approach and materials used. Editorial tone with generous spacing.">Body copy describing the project scope, design approach and materials used. Editorial tone with generous spacing.</p>
 
             <ul class="project-detail__facts">
-              <li><span class="meta">Location</span> Casa Blanca</li>
-              <li><span class="meta">Year</span> 2024</li>
-              <li><span class="meta">Scope</span> Pool · Garden · Stone Work</li>
-              <li><span class="meta">Duration</span> 9 Months</li>
+              <li><span class="meta" data-i18n="Location">Location</span> Casa Blanca</li>
+              <li><span class="meta" data-i18n="Year">Year</span> 2024</li>
+              <li><span class="meta" data-i18n="Scope">Scope</span> <span data-i18n="Pool · Garden · Stone Work">Pool · Garden · Stone Work</span></li>
+              <li><span class="meta" data-i18n="Duration">Duration</span> <span data-i18n="9 Months">9 Months</span></li>
             </ul>
 
-            <a href="contact.html" class="btn btn--primary">REQUEST A QUOTE</a>
+            <a href="contact.html" class="btn btn--primary" data-i18n="REQUEST A QUOTE">REQUEST A QUOTE</a>
           </div>
 
         </div>
@@ -97,19 +90,19 @@
         <div class="gallery__grid">
           <figure class="gallery__item">
             <img src="public/imgs/hero_garden.jpg" alt="">
-            <figcaption class="gallery__caption">Detail — 01</figcaption>
+            <figcaption class="gallery__caption" data-i18n="Detail — 01">Detail — 01</figcaption>
           </figure>
           <figure class="gallery__item">
             <img src="public/imgs/hero_swimmingpool.jpg" alt="">
-            <figcaption class="gallery__caption">Detail — 02</figcaption>
+            <figcaption class="gallery__caption" data-i18n="Detail — 02">Detail — 02</figcaption>
           </figure>
           <figure class="gallery__item">
             <img src="public/imgs/hero_garden.jpg" alt="">
-            <figcaption class="gallery__caption">Detail — 03</figcaption>
+            <figcaption class="gallery__caption" data-i18n="Detail — 03">Detail — 03</figcaption>
           </figure>
           <figure class="gallery__item">
             <img src="public/imgs/hero_swimmingpool.jpg" alt="">
-            <figcaption class="gallery__caption">Detail — 04</figcaption>
+            <figcaption class="gallery__caption" data-i18n="Detail — 04">Detail — 04</figcaption>
           </figure>
         </div>
       </div>
@@ -119,8 +112,8 @@
     <section class="next-project">
       <div class="container">
         <a href="project.html" class="next-project__link">
-          <p class="intro__eyebrow">Next Project</p>
-          <h2 class="next-project__title">Cascade House</h2>
+          <p class="intro__eyebrow" data-i18n="Next Project">Next Project</p>
+          <h2 class="next-project__title" data-i18n="Cascade House">Cascade House</h2>
         </a>
       </div>
     </section>
@@ -128,11 +121,8 @@
     <!-- CONTACT CTA -->
     <section class="cta">
       <div class="container">
-        <h2 class="cta__title">
-          START<br>
-          YOURS
-        </h2>
-        <a href="contact.html" class="btn btn--light">REQUEST A QUOTE</a>
+        <h2 class="cta__title" data-i18n="START<br>YOURS">START<br>YOURS</h2>
+        <a href="contact.html" class="btn btn--light" data-i18n="REQUEST A QUOTE">REQUEST A QUOTE</a>
       </div>
     </section>
 
@@ -144,19 +134,20 @@
       <a href="index.html" class="site-footer__logo">Mantouvert</a>
       <nav class="site-footer__nav">
         <ul>
-          <li><a href="projects.html">Projects</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="projects.html" data-i18n="Projects">Projects</a></li>
+          <li><a href="services.html" data-i18n="Services">Services</a></li>
+          <li><a href="about.html" data-i18n="About">About</a></li>
+          <li><a href="contact.html" data-i18n="Contact">Contact</a></li>
         </ul>
       </nav>
       <div class="site-footer__meta">
-        <p>© 2025 Mantouvert. All rights reserved.</p>
-        <p>Pool Construction · Garden Design · Landscaping · Villas</p>
+        <p data-i18n="© 2026 Mantouvert. All rights reserved.">© 2026 Mantouvert. All rights reserved.</p>
+        <p data-i18n="Pool Construction · Garden Design · Landscaping · Villas">Pool Construction · Garden Design · Landscaping · Villas</p>
       </div>
     </div>
   </footer>
 
+  <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

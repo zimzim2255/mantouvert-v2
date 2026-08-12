@@ -494,8 +494,8 @@
 
       <!-- Bottom bar — copyright -->
       <div class="mega-footer__bottom">
-        <p>© 2025 Mantouvert. All rights reserved.</p>
-        <p>Pool Construction · Garden Design · Landscaping · Villas</p>
+        <p data-i18n="© 2026 Mantouvert. All rights reserved.">© 2026 Mantouvert. All rights reserved.</p>
+        <p data-i18n="Pool Construction · Garden Design · Landscaping · Villas">Pool Construction · Garden Design · Landscaping · Villas</p>
       </div>
     `;
 
@@ -611,9 +611,9 @@
     overlay.className = 'gallery-overlay';
 
     overlay.innerHTML = `
-      <button class="gallery-overlay__close" aria-label="Close gallery">Close</button>
+      <button class="gallery-overlay__close" aria-label="Close gallery" data-i18n="Close">Close</button>
       <div class="infinite-gallery">
-        <div class="infinite-gallery__title">Explore the Collection</div>
+        <div class="infinite-gallery__title" data-i18n="Explore the Collection">Explore the Collection</div>
         <div class="infinite-gallery__canvas"></div>
       </div>
     `;
@@ -1033,6 +1033,17 @@
     };
     document.addEventListener('keydown', onKey);
   };
+
+  // Re-translate the injected mega footer whenever the language changes
+  const retranslateDynamic = () => {
+    document.querySelectorAll('.mega-footer, .gallery-overlay').forEach((el) => {
+      if (window.MantouvertI18n && window.MantouvertI18n.translate) {
+        window.MantouvertI18n.translate(el);
+      }
+    });
+  };
+
+  document.addEventListener('i18n:change', retranslateDynamic);
 
   // Wire up all "Explore all projects" links.
   // Each editorial spread opens its own collection:

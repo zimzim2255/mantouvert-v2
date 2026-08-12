@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/i18n.css">
 </head>
 <body>
 
@@ -26,11 +27,11 @@
         <source src="https://res.cloudinary.com/dqlr9mio4/video/upload/q_auto/v1786396921/From_Klickpin.com-_1057431187524340407-pin-id-1057431187524340407_l3fhx6.mp4" type="video/mp4">
       </video>
       <ul class="nav__links">
-        <li><a href="index.html" class="nav__link">Home</a></li>
-        <li><a href="projects.html" class="nav__link is-active">Projects</a></li>
-        <li><a href="services.html" class="nav__link">Services</a></li>
-        <li><a href="about.html" class="nav__link">About</a></li>
-        <li><a href="contact.html" class="nav__link nav__link--cta">Request a Quote</a></li>
+        <li><a href="index.html" class="nav__link" data-i18n="Home">Home</a></li>
+        <li><a href="projects.html" class="nav__link is-active" data-i18n="Projects">Projects</a></li>
+        <li><a href="services.html" class="nav__link" data-i18n="Services">Services</a></li>
+        <li><a href="about.html" class="nav__link" data-i18n="About">About</a></li>
+        <li><a href="contact.html" class="nav__link nav__link--cta" data-i18n="Request a Quote">Request a Quote</a></li>
       </ul>
     </div>
   </header>
@@ -43,12 +44,9 @@
         <img src="public/imgs/hero_swimmingpool.jpg" alt="">
       </div>
       <div class="hero__content container">
-        <h1 class="hero__title">
-          SELECTED<br>
-          WORK
-        </h1>
+        <h1 class="hero__title" data-i18n="SELECTED<br>WORK">SELECTED<br>WORK</h1>
         <div class="hero__actions">
-          <a href="contact.html" class="btn btn--primary">REQUEST A QUOTE</a>
+          <a href="contact.html" class="btn btn--primary" data-i18n="REQUEST A QUOTE">REQUEST A QUOTE</a>
         </div>
       </div>
     </section>
@@ -56,10 +54,8 @@
     <!-- EDITORIAL INTRO -->
     <section class="intro">
       <div class="container">
-        <p class="intro__eyebrow">— 01 — Portfolio</p>
-        <h2 class="intro__title">
-          A curated collection of pools, gardens, villas and outdoor living spaces.
-        </h2>
+        <p class="intro__eyebrow" data-i18n="— 01 — Portfolio">— 01 — Portfolio</p>
+        <h2 class="intro__title" data-i18n="A curated collection of pools, gardens, villas and outdoor living spaces.">A curated collection of pools, gardens, villas and outdoor living spaces.</h2>
       </div>
     </section>
 
@@ -106,15 +102,15 @@
         <div class="stats__grid">
           <div class="stat">
             <span class="stat__number">+50</span>
-            <span class="stat__label">Projects Completed</span>
+            <span class="stat__label" data-i18n="Projects Completed">Projects Completed</span>
           </div>
           <div class="stat">
-            <span class="stat__number">15+</span>
-            <span class="stat__label">Years of Experience</span>
+            <span class="stat__number">7+</span>
+            <span class="stat__label" data-i18n="Years of Experience">Years of Experience</span>
           </div>
           <div class="stat">
             <span class="stat__number">100%</span>
-            <span class="stat__label">Happy Customers</span>
+            <span class="stat__label" data-i18n="Happy Customers">Happy Customers</span>
           </div>
         </div>
       </div>
@@ -123,23 +119,18 @@
     <!-- BE THE NEXT PROJECT -->
     <section class="next-project">
       <div class="container">
-        <p class="intro__eyebrow">— 03 — Your Turn</p>
-        <h2 class="next-project__title">Be the Next Project</h2>
-        <p class="craftsmanship__text">
-          Every garden, pool and villa starts with a conversation. Tell us about your space — and we'll make it the next one we're proud to call ours.
-        </p>
-        <a href="contact.html" class="btn btn--primary">START YOUR PROJECT</a>
+        <p class="intro__eyebrow" data-i18n="— 03 — Your Turn">— 03 — Your Turn</p>
+        <h2 class="next-project__title" data-i18n="Be the Next Project">Be the Next Project</h2>
+        <p class="craftsmanship__text" data-i18n="Every garden, pool and villa starts with a conversation. Tell us about your space — and we'll make it the next one we're proud to call ours.">Every garden, pool and villa starts with a conversation. Tell us about your space — and we'll make it the next one we're proud to call ours.</p>
+        <a href="contact.html" class="btn btn--primary" data-i18n="START YOUR PROJECT">START YOUR PROJECT</a>
       </div>
     </section>
 
     <!-- CONTACT CTA -->
     <section class="cta">
       <div class="container">
-        <h2 class="cta__title">
-          HAVE A<br>
-          PROJECT?
-        </h2>
-        <a href="contact.html" class="btn btn--light">REQUEST A QUOTE</a>
+        <h2 class="cta__title" data-i18n="HAVE A<br>PROJECT?">HAVE A<br>PROJECT?</h2>
+        <a href="contact.html" class="btn btn--light" data-i18n="REQUEST A QUOTE">REQUEST A QUOTE</a>
       </div>
     </section>
 
@@ -151,19 +142,20 @@
       <a href="index.html" class="site-footer__logo">Mantouvert</a>
       <nav class="site-footer__nav">
         <ul>
-          <li><a href="projects.html">Projects</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="projects.html" data-i18n="Projects">Projects</a></li>
+          <li><a href="services.html" data-i18n="Services">Services</a></li>
+          <li><a href="about.html" data-i18n="About">About</a></li>
+          <li><a href="contact.html" data-i18n="Contact">Contact</a></li>
         </ul>
       </nav>
       <div class="site-footer__meta">
-        <p>© 2025 Mantouvert. All rights reserved.</p>
-        <p>Pool Construction · Garden Design · Landscaping · Villas</p>
+        <p data-i18n="© 2026 Mantouvert. All rights reserved.">© 2026 Mantouvert. All rights reserved.</p>
+        <p data-i18n="Pool Construction · Garden Design · Landscaping · Villas">Pool Construction · Garden Design · Landscaping · Villas</p>
       </div>
     </div>
   </footer>
 
+  <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

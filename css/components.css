@@ -584,7 +584,7 @@
   left: 0;
   right: 0;
   z-index: 2;
-  padding: 0 60px 60px;
+  padding: 0 60px 140px;
   pointer-events: none;
 }
 
@@ -602,7 +602,7 @@
 
 .hero-cards__paragraph {
   position: absolute;
-  bottom: 60px;
+  bottom: 14
   right: 60px;
   max-width: 350px;
   font-family: var(--font-body);
