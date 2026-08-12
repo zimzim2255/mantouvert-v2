@@ -170,7 +170,7 @@
 
       /* Mega footer */
       'Design, build, repair and maintain complete outdoor environments — from luxury pools and cascading water features to gardens, villas and outdoor living spaces.': 'Nous concevons, construisons, réparons et entretenons des environnements extérieurs complets — des piscines de luxe et jeux d\'eau en cascade aux jardins, villas et espaces de vie extérieurs.',
-      '© 2026 Mantouvert. All rights reserved.': '© 2026 Mantouvert. Tous droits réservés.',
+      '© 2026 Evolution Ltd. All rights reserved.': '© 2026 Evolution Ltd. Tous droits réservés.',
       'Pool Construction · Garden Design · Landscaping · Villas': 'Piscines · Conception de jardins · Paysagisme · Villas',
 
       /* Infinite gallery */
@@ -178,7 +178,12 @@
       'Explore the Collection': 'Explorer la collection',
       'Pools': 'Piscines',
       'Gardens': 'Jardins',
-      'Fountains': 'Fontaines'
+      'Fountains': 'Fontaines',
+
+      /* Legal pages */
+      'Copyright': 'Copyright',
+      'Terms & Conditions': 'Conditions générales',
+      'Privacy Policy': 'Politique de confidentialité'
     },
 
     ar: {
@@ -337,7 +342,7 @@
 
       /* Mega footer */
       'Design, build, repair and maintain complete outdoor environments — from luxury pools and cascading water features to gardens, villas and outdoor living spaces.': 'نصمم ونبني ونصلح ونصون بيئات خارجية متكاملة — من المسابح الفاخرة ونوافير المياه المتدفقة إلى الحدائق والفيلات ومساحات المعيشة الخارجية.',
-      '© 2026 Mantouvert. All rights reserved.': '© 2026 مانتوفير. جميع الحقوق محفوظة.',
+      '© 2026 Evolution Ltd. All rights reserved.': '© 2026 Evolution Ltd. جميع الحقوق محفوظة.',
       'Pool Construction · Garden Design · Landscaping · Villas': 'المسابح · تصميم الحدائق · تنسيق المواقع · الفيلات',
 
       /* Infinite gallery */
@@ -345,7 +350,12 @@
       'Explore the Collection': 'استكشف المجموعة',
       'Pools': 'المسابح',
       'Gardens': 'الحدائق',
-      'Fountains': 'النوافير'
+      'Fountains': 'النوافير',
+
+      /* Legal pages */
+      'Copyright': 'حقوق النشر',
+      'Terms & Conditions': 'الشروط والأحكام',
+      'Privacy Policy': 'سياسة الخصوصية'
     }
   };
 

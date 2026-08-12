@@ -494,10 +494,14 @@
               Design, build, repair and maintain complete outdoor environments — from luxury pools and cascading water features to gardens, villas and outdoor living spaces.
             </p>
             <div class="mega-footer__socials">
-              <a href="#" aria-label="Instagram">Instagram</a>
-              <a href="#" aria-label="Facebook">Facebook</a>
-              <a href="#" aria-label="LinkedIn">LinkedIn</a>
-              <a href="#" aria-label="Pinterest">Pinterest</a>
+              <a href="https://www.instagram.com/manteauvert.ma?igsh=bzFtMjEzcjMyYTd4" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+            </div>
+
+            <!-- Legal links -->
+            <div class="mega-footer__legal">
+              <a href="copyright.html" data-i18n="Copyright">Copyright</a>
+              <a href="conditions.html" data-i18n="Terms & Conditions">Terms & Conditions</a>
+              <a href="privacy.html" data-i18n="Privacy Policy">Privacy Policy</a>
             </div>
           </div>
 
@@ -511,10 +515,24 @@
 
       <!-- Bottom bar — copyright -->
       <div class="mega-footer__bottom">
-        <p data-i18n="© 2026 Mantouvert. All rights reserved.">© 2026 Mantouvert. All rights reserved.</p>
+        <p data-i18n="© 2026 Evolution Ltd. All rights reserved.">© 2026 Evolution Ltd. All rights reserved.</p>
         <p data-i18n="Pool Construction · Garden Design · Landscaping · Villas">Pool Construction · Garden Design · Landscaping · Villas</p>
       </div>
     `;
+
+    // WhatsApp floating button — global across every page
+    const wa = document.createElement('a');
+    wa.className = 'whatsapp-btn';
+    wa.href = 'https://wa.me/212777741067';
+    wa.target = '_blank';
+    wa.rel = 'noopener';
+    wa.setAttribute('aria-label', 'Chat on WhatsApp');
+    wa.innerHTML = `
+      <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor" aria-hidden="true">
+        <path d="M16.004 3.2c-7.06 0-12.8 5.74-12.8 12.8 0 2.26.59 4.46 1.71 6.4L3.2 28.8l6.62-1.73a12.74 12.74 0 0 0 6.18 1.57h.01c7.06 0 12.79-5.74 12.79-12.8s-5.74-12.64-12.8-12.64zm0 23.36h-.01a10.6 10.6 0 0 1-5.4-1.48l-.39-.23-3.93 1.03 1.05-3.83-.25-.39a10.56 10.56 0 0 1-1.62-5.66c0-5.87 4.78-10.65 10.66-10.65 2.84 0 5.52 1.11 7.53 3.12a10.58 10.58 0 0 1 3.12 7.53c0 5.88-4.78 10.56-10.66 10.56zm5.84-7.98c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.72.16-.21.32-.82 1.04-1.01 1.25-.18.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.9-1.78-2.22-.19-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.72-1.73-.98-2.37-.26-.62-.52-.54-.72-.55h-.61c-.21 0-.56.08-.85.4-.29.32-1.12 1.09-1.12 2.66 0 1.57 1.14 3.09 1.3 3.3.16.21 2.25 3.44 5.45 4.82.76.33 1.36.53 1.82.67.77.25 1.47.21 2.02.13.62-.09 1.89-.77 2.16-1.52.27-.75.27-1.39.19-1.52-.08-.13-.29-.21-.61-.37z"/>
+      </svg>
+    `;
+    document.body.appendChild(wa);
 
     // Brown spacer band between the last section and the footer
     const spacer = document.createElement('div');
