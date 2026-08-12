@@ -584,7 +584,7 @@
   left: 0;
   right: 0;
   z-index: 2;
-  padding: 0 60px 140px;
+  padding: 0 60px 80px;
   pointer-events: none;
 }
 
@@ -602,7 +602,7 @@
 
 .hero-cards__paragraph {
   position: absolute;
-  bottom: 14
+  bottom: 80px;
   right: 60px;
   max-width: 350px;
   font-family: var(--font-body);
@@ -1514,7 +1514,7 @@ body.is-locked {
   .hero-cards__footer {
     grid-template-columns: 1fr;
     gap: 24px;
-    padding: 0 20px 32px;
+    padding: 0 20px 120px;
   }
 
   .hero-cards__headline {
@@ -1524,6 +1524,7 @@ body.is-locked {
   .hero-cards__paragraph {
     font-size: 14px;
     margin: 0;
+    bottom: 120px;
   }
 
   .project-grid {

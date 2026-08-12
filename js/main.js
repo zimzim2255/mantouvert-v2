@@ -467,8 +467,8 @@
 
           <!-- Contact — desktop top-right, mobile bottom-right on the title line -->
           <div class="mega-footer__contact">
-            <a href="mailto:hello@mantouvert.com">hello@mantouvert.com</a>
-            <a href="tel:+212000000000">+212 000 000 000</a>
+            <a href="mailto:manteauverte@gmail.com">manteauverte@gmail.com</a>
+            <a href="tel:0777741067">0777741067</a>
           </div>
 
           <!-- Center — brand statement -->
